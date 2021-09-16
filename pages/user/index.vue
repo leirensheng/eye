@@ -1,0 +1,139 @@
+<template>
+  <div class="user-page">
+    <div class="top">
+      <div class="left">
+        <div class="icon-wrap">
+          <image class="icon" mode="widthFix" :src="src" @click="clickName" />
+        </div>
+        <span @click="clickName">{{ username }}</span>
+      </div>
+    </div>
+    <div class="bottom">
+      <div class="history-wrap">
+        <history :isShow="isShow" :isLogin="isLogin"></history>
+      </div>
+      <div class="tips">
+        <span>如何生成报告？</span>
+        <span class="blue" @click="toHome">操作指南></span>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      isShow: false,
+      user: null,
+      historyType:0,
+      isLogin:false,
+      user:''
+    };
+  },
+  computed: {
+    src() {
+      return this.isLogin ? this.user.avatar : "/static/no-user.svg";
+    },
+    username() {
+      return this.isLogin ? this.user.nickName : "登录/注册";
+    },
+  },
+
+  async onReachBottom() {
+    this.$store.commit("setReachBottom", true);
+  },
+
+  onHide(){
+    this.isShow = false
+  },
+  async onShow(){
+    this.isLogin = await this.$checkLogin()
+    this.user = uni.getStorageSync("user");
+    this.isShow = true
+
+  },
+  methods: {
+    clickName() {
+      if (!this.isLogin) {
+        this.$toLogin();
+      }
+    },
+    toHome() {
+      uni.redirectTo({
+        url: "/pages/index/index",
+      });
+    },
+  },
+};
+</script>
+
+<style scoped lang="scss">
+.user-page {
+  min-height: 100vh;
+  padding-bottom: 48rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  .bg {
+    position: absolute;
+    z-index: -1;
+    top: -1px;
+    width: 100%;
+  }
+  .top {
+    width: 100%;
+    height: 206rpx;
+    display: flex;
+    position: relative;
+    color: white;
+    display: flex;
+    align-items: center;
+    background: linear-gradient(180deg, #005CF6 0%, #004DCD 100%);
+    .left {
+      margin-left: 62rpx;
+      height: 90rpx;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 32rpx;
+      .icon-wrap {
+        border-radius: 50%;
+        width: 90rpx;
+        height: 90rpx;
+        border: 2rpx solid #fff;
+        margin-right: 16rpx;
+        overflow: hidden;
+        will-change: transform;
+        .icon {
+          width: 90rpx;
+        }
+      }
+    }
+  }
+  .bottom {
+    width: 100%;
+    flex: 1;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    .history-wrap {
+      width: 100%;
+    }
+
+    .tips {
+      padding-right: 24rpx;
+      display: flex;
+      justify-content: center;
+      color: #292929;
+      font-size: 28rpx;
+      .blue {
+        color: rgb(60, 87, 231);
+      }
+    }
+  }
+}
+</style>

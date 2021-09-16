@@ -1,0 +1,47 @@
+import env from './getEnv.js'
+let map={
+  develop:'http://192.168.2.14:38080/intelligent-identify',
+  trial:'http://192.168.2.14:38080/intelligent-identify',
+}
+let baseUrl = map[env]||"'http://192.168.2.14:38080/intelligent-identify'"
+let http = (option) => {
+  let { timeout = 16000, data, method = "get",url } = option;
+  return new Promise((resolve, reject) => {
+    uni.request({
+      url: baseUrl + url,
+      timeout,
+      dataType: "json",
+
+      data,
+      method: method,
+
+      header: {
+      },
+      success: (res) => {
+        let { msg, message, code, data } = res.data;
+        if (code !== 0) {
+          uni.showToast({
+            icon: "none",
+            title: (msg || message),
+            duration: 2000,
+          });
+          reject(res.data);
+          return;
+        }
+        resolve(data);
+      },
+      fail: (res) => {
+        uni.showToast({
+          icon: "none",
+          title: '请求失败',
+          duration: 2000,
+        });
+        // uni.toast("网络不给力，请稍后再试~");
+        reject(res);
+      },
+      complete: () => {},
+    });
+  });
+};
+export {baseUrl}
+export default http

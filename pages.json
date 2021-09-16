@@ -1,0 +1,79 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/index/index",
+			"style": {
+				"disableScroll":true,  
+				"navigationBarTitleText": "uni-app",
+				"navigationBarTitleText": "慧眼识物"
+			}
+		},
+		{
+			"path": "pages/login/index",
+			"style": {
+				"navigationBarTitleText": "授权登录"
+			}
+		},
+		{
+			"path": "pages/search/index",
+			"style": {
+				"navigationBarTitleText": "首页",
+				"navigationBarTextStyle": "#fff",
+				"navigationBarBackgroundColor": "#005CF6"
+			}
+		},
+		{
+			"path": "pages/user/index",
+			"style": {
+				"navigationBarTitleText": "我的报告",
+				"navigationBarTextStyle": "#fff",
+				"navigationBarBackgroundColor": "#005CF6"
+			}
+		},
+		{
+			"path": "pages/report/index",
+			"style": {
+				"navigationBarTitleText": "合规性报告"
+			}
+		},
+		{
+			"path": "pages/luminousFlux/index",
+			"style": {
+				"navigationBarTitleText": "光通量知识点"
+			}
+		},
+		{
+			"path": "pages/colourTemperature/index",
+			"style": {
+				"navigationBarTitleText": "色温知识点"
+			}
+		}
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#fff",
+		"backgroundColor": "#F8F8F8"
+	},
+	"tabBar": {
+		"borderStyle": "black",
+		"backgroundColor": "#FFFFFF",
+		"color": "#999999",
+		"selectedColor": "#004DCD",
+		"iconWidth": "18px",
+		"list": [
+			{
+				"pagePath": "pages/search/index",
+				"iconPath": "static/search.png",
+				"selectedIconPath": "static/search-active.png",
+				"text": "合规检查"
+			},
+			{
+				"pagePath": "pages/user/index",
+				"iconPath": "static/user.png",
+				"selectedIconPath": "static/user-active.png",
+				"text": "我的报告"
+			}
+		]
+	}
+}

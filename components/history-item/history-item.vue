@@ -1,6 +1,6 @@
 <template>
   <div class="history-item" @click="toDetail">
-    <image class="left" mode="widthFix" :src="src"></image>
+    <image class="left" mode="widthFix" :src="src" v-if="src"></image>
     <div class="right">
       <div class="name">{{ item.productName }}</div>
       <div class="bottom">
@@ -26,6 +26,7 @@ export default {
   },
   computed: {
     src() {
+      if(!this.item.platform ) return ''
       return "/static/" + this.item.platform + ".png";
     },
   },

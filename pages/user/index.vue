@@ -41,7 +41,7 @@ export default {
   },
 
   async onReachBottom() {
-    this.$store.commit("setReachBottom", true);
+    uni.$emit('setReachBottom')
   },
 
   onHide(){

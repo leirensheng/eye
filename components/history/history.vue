@@ -27,13 +27,13 @@
 
 <script>
 import { getHistory } from "@/api/eye.js";
-import { mapState } from "vuex";
 import mock from "./mock.js";
 let needRefresh = false
 let needRefreshCollect = false
 export default {
   data() {
     return {
+      isReachBottom:false,
       loading: false,
       history: [],
       collected: 0,
@@ -62,11 +62,10 @@ export default {
       };
     },
 
-    ...mapState(["isReachBottom"]),
   },
   watch: {
     isReachBottom() {
-      this.$store.commit("setReachBottom", false);
+      this.isReachBottom = false
       if(this.noMore || this.loading) return
       this.page++;
       this.getData();
@@ -85,18 +84,25 @@ export default {
         if (val) {
           this.checkAndLoadData();
           this.checkIfShowPic();
-          // this.checkIfRefreshCollectData()
         }
       },
     },
   },
-  onLoad(){
+  created(){
+    uni.$on('setReachBottom',()=>{
+      this.isReachBottom = true
+    })
     uni.$on('refreshHistory',()=>{
       needRefresh = true
     })
     uni.$on('refreshCollect',()=>{
       needRefreshCollect = true
     })
+  },
+  beforeDestroy(){
+    uni.$off('refreshHistory')
+    uni.$off('refreshCollect')
+    uni.$off('setReachBottom')
   },
   methods: {
     refresh(){
@@ -132,6 +138,8 @@ export default {
       this.loading = true;
       try {
         let data = await getHistory(this.params);
+        // await this.$sleep()
+        // let data = mock;
         this.checkIsNoMore(data);
         this.history.push(...data);
       } catch (e) {

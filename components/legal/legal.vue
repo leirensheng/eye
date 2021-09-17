@@ -30,7 +30,7 @@
       <div class="knowledge" @click="toKnowledge('colourTemperature')">知识点></div>
     </div>
 
-    <div class="hight-title guang">色温</div>
+    <div class="hight-title guang">光通量</div>
     <div class="card">
       <my-card
         :title="guangTitle"
@@ -181,7 +181,6 @@ export default {
   mounted() {},
   methods: {
    toKnowledge(page){
-     uni.$emit('reportNoRefresh')
      this.$toPage(page)
    },
     checkIsLost(webInfo) {

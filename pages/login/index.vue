@@ -109,8 +109,10 @@ export default {
         console.log("用户信息缓存成功");
         this.hasGetUser = true;
         uni.setStorageSync("jsCode", this.code);
+        uni.$emit('loginStatus',true)
         uni.navigateBack();
       } catch (e) {
+        uni.$emit('loginStatus',false)
         uni.clearStorageSync();
         console.log(e);
       }

@@ -74,10 +74,15 @@ export function analyse(data) {
 
 
 export function generate(data) {
+  let openId = uni.getStorageSync("openId");
+
   return request({
     url: `/report/generate`,
     method:'post',
-    data    
+    data:{
+      ...data,
+      openId
+    }    
   });
 }
 

@@ -5,11 +5,23 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
 	state: {
-        isReachBottom :false,
+        hasShowTips :false,
+        clipData:'',
+        needRefreshAll:false,
+        needRefreshCollect:false
 	},
 	mutations: {
-        setReachBottom(state,val){
-            state.isReachBottom = val
+        setShowTips(state){
+            state.hasShowTips = true
+        },
+        setClipData(state,val){
+            state.clipData = val
+        },
+        setNeedRefreshAll(state,val){
+            state.needRefreshAll = val
+        },
+        setNeedRefreshCollect(state,val){
+            state.needRefreshCollect = val
         },
 	},
 	actions: {

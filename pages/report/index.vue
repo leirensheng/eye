@@ -42,6 +42,7 @@
 
 <script>
 import { deleteReport, collect, noCollect, getDetail } from "@/api/eye.js";
+import { mapMutations } from "vuex";
 let isFromKnowledge = false;
 export default {
   data() {
@@ -109,25 +110,17 @@ export default {
   },
   created() {},
   mounted() {},
-  onShow() {
-    if (isFromKnowledge) {
-      isFromKnowledge = false;
-      return;
-    }
-    this.getDetail();
-  },
+
   onUnload() {
-    uni.$off("reportNoRefresh");
     console.log("unload", this.data);
+    uni.$off("loginStatus", this.backFromLogin);
     let isChange = this.isCollected !== this.data.collected;
     if (isChange) {
-      uni.$emit("needRefreshCollect");
+      this.setNeedRefreshCollect(true);
     }
   },
   async onLoad({ id }) {
-    uni.$on("reportNoRefresh", () => {
-      isFromKnowledge = true;
-    });
+    uni.$on("loginStatus", this.backFromLogin);
     this.id = id;
     uni.showLoading({
       title: "加载中",
@@ -137,9 +130,18 @@ export default {
     if (!isLogin) {
       uni.hideLoading();
       this.$toLogin();
+    } else {
+      await this.getDetail();
     }
   },
   methods: {
+    backFromLogin(val) {
+      if (val) {
+        this.getDetail();
+      }
+    },
+    ...mapMutations(["setNeedRefreshAll", "setNeedRefreshCollect"]),
+
     async getDetail() {
       let openId = uni.getStorageSync("openId");
       if (!openId) return;
@@ -156,7 +158,7 @@ export default {
       });
       await deleteReport(this.id);
       uni.hideLoading();
-      uni.$emit("refreshHistory");
+      this.setNeedRefreshAll(true);
       uni.navigateBack();
     },
 

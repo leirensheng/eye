@@ -17,7 +17,7 @@
         /> -->
         <div class="result" v-if="result">
           <image class="icon" mode="widthFix" v-if="src" :src="src"></image>
-          <div>{{ result.title }}</div>
+          <div>{{ result.productName }}</div>
         </div>
         <div class="right" @click="clear">
           <image class="icon" mode="widthFix" src="/static/delete.svg"></image>
@@ -47,52 +47,44 @@
 </template>
 
 <script>
-import { analyse,  generate } from "@/api/eye.js";
+import { analyse, generate } from "@/api/eye.js";
+import { mapMutations } from "vuex";
 
 import subscribeMixin from "./subscribe";
 
 export default {
   mixins: [subscribeMixin],
 
-  async onShow() {
-    let isFromLogin = this.isToLogin;
-    this.isToLogin = false;
+  async onShow() {},
+  onUnload() {
+    uni.$off("analyse");
+    uni.$off("loginStatus",this.setLoginStatus);
 
-    // uni.showLoading({
-    //   title: "正在加载",
-    // });
-    this.loading = true
-    this.isLogin = await this.$checkLogin();
-    this.loading  = false
-    // uni.hideLoading();
+  },
+  onLoad() {
+    uni.$on("loginStatus", this.setLoginStatus);
+    uni.$on("analyse", this.start);
+  },
+  async created() {
+    // 从介绍页面进来后,读取
+    let clipData = await this.$getClip();
+    this.setClipData(clipData)
 
-    if (!isFromLogin) {
-      this.checkSubscribe();
-      uni.getClipboardData({
-        success: (res) => {
-          if (res.data.indexOf("http") === -1) return;
-          this.value = res.data;
-          this.$nextTick(() => {
-            this.analyseUrl();
-          });
-        },
-      });
+    if(clipData.indexOf('http')!==-1){
+      this.start();
     }
   },
   data() {
     return {
-      noInfo: false,
-      isToLogin: false,
       result: "",
       value: "",
       form: {},
       isLogin: false,
-      loading:false,
+      loading: false,
       placeholder:
         "请复制淘宝、天猫、京东、拼多多手机端室内照明产品的链接，打开小程序即可自动粘贴",
     };
   },
-  created() {},
   mounted() {},
   computed: {
     isNotComplete() {
@@ -101,7 +93,7 @@ export default {
       return arr.some((key) => [undefined, ""].includes(this.result[key]));
     },
     isDisabled() {
-      return this.value.length === 0 || !this.isPlaformMatch|| this.loading;
+      return this.value.length === 0 || !this.isPlaformMatch || this.loading;
     },
     isPlaformMatch() {
       return ["TB", "TM", "JD", "PDD"].includes((this.result || {}).platform);
@@ -117,22 +109,42 @@ export default {
     },
   },
   methods: {
+    setLoginStatus(val){
+      this.isLogin = val;
+    },
+    ...mapMutations(["setClipData","setNeedRefreshAll"]),
+
+    async start() {
+      console.log('start')
+      this.loading = true;
+      this.isLogin = await this.$checkLogin();
+      this.loading = false;
+
+      this.checkSubscribe();
+      
+      let clipData = this.$store.state.clipData
+      console.log('clipData')
+      this.value = clipData;
+      this.$nextTick(() => {
+        this.analyseUrl();
+      });
+    },
     async analyseUrl() {
       if (!this.value) return;
       this.result = null;
-      this.loading = true
+      this.loading = true;
       uni.showLoading({
         title: "解析中",
       });
-      this.result = await analyse({url:this.value});
+      this.result = await analyse({ url: this.value });
       this.form = { ...this.result };
       uni.hideLoading();
-      this.loading =false
+      this.loading = false;
     },
 
     async generateReport() {
       let weChatNotify = false;
-      this.loading = true
+      this.loading = true;
       try {
         await this.subscribe();
         weChatNotify = true;
@@ -146,8 +158,10 @@ export default {
         ...this.form,
         weChatNotify,
       });
+      console.log('生成完成')
+      this.setNeedRefreshAll(true)
       uni.hideLoading();
-      this.loading = false
+      this.loading = false;
       this.toReport(weChatNotify);
     },
     toReport(isSubscribeOk) {
@@ -158,11 +172,12 @@ export default {
     },
     clear() {
       this.value = "";
+      this.form = {};
+      this.result = "";
     },
     async generateBtnClick() {
       if (!this.isLogin) {
         this.$toLogin();
-        this.isToLogin = true;
         return;
       }
       await this.generateReport();

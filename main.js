@@ -4,7 +4,7 @@ import store from "./store";
 import checkLogin from "@/utils/checkLogin.js";
 Vue.config.productionTip = false;
 Vue.prototype.$checkLogin = checkLogin;
-// Vue.prototype.$store = store;
+Vue.prototype.$store = store;
 Vue.prototype.$formatDate = (val) => {
   if (!val) return "";
   let date = val;
@@ -60,6 +60,17 @@ Vue.prototype.$getPrePath = () => {
   let prePage = pages.slice(-2)[0];
   return prePage && prePage.route;
 };
+
+
+Vue.prototype.$getClip=()=>{
+  return new Promise((resolve) => {
+    uni.getClipboardData({
+      success: (res) => {
+        resolve(res.data)
+      },
+    });
+  });
+},
 App.mpType = "app";
 
 const app = new Vue({

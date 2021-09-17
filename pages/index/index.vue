@@ -70,15 +70,21 @@
 </template>
 
 <script>
+import { mapMutations } from "vuex";
 export default {
   data() {
     return {
       current: 0,
     };
   },
-  created() {},
+  computed: {
+  },
+  created() {
+    this.setShowTips();
+  },
   mounted() {},
   methods: {
+    ...mapMutations(["setShowTips"]),
     open() {
       uni.switchTab({
         url: "/pages/search/index",

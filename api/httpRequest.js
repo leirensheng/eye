@@ -5,7 +5,7 @@ let map={
 }
 let baseUrl = map[env]||"'http://192.168.2.14:38080/intelligent-identify'"
 let http = (option) => {
-  let { timeout = 16000, data, method = "get",url } = option;
+  let { timeout = 60000, data, method = "get",url } = option;
   return new Promise((resolve, reject) => {
     uni.request({
       url: baseUrl + url,

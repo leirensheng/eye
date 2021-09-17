@@ -1,10 +1,27 @@
 <script>
+import { mapMutations } from "vuex";
+
 export default {
   onLaunch: function () {
     console.log("App Launch");
   },
-  onShow: function () {
+  async onShow() {
     console.log("App Show");
+    // 首次进入进入介绍页面,不跳转,不读取
+    if (!this.$store.state.hasShowTips) {
+      return;
+    }
+    let clipData = await this.$getClip();
+    this.setClipData(clipData)
+    if (clipData.indexOf("http") !== -1) {
+      uni.switchTab({
+        url: "/pages/search/index",
+      });
+      uni.$emit("analyse");
+    }
+  },
+  methods:{
+    ...mapMutations(["setClipData"]),
   },
   onHide: function () {
     console.log("App Hide");
@@ -75,7 +92,6 @@ div {
   position: sticky;
   top: 0;
   z-index: 33;
-
 }
 .hight-title {
   font-size: 32rpx;

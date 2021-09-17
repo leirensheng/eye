@@ -27,17 +27,14 @@
 
 <script>
 import { getHistory } from "@/api/eye.js";
-import mock from "./mock.js";
-let needRefresh = false
-let needRefreshCollect = false
+import { mapState, mapMutations } from "vuex";
 export default {
   data() {
     return {
-      isReachBottom:false,
+      isReachBottom: false,
       loading: false,
       history: [],
       collected: 0,
-      page: 1,
       noMore: false,
       isShowReject: false,
       isShowAgree: false,
@@ -55,28 +52,29 @@ export default {
     },
   },
   computed: {
+    ...mapState(["needRefreshAll", "needRefreshCollect"]),
     params() {
       return {
         collected: this.collected,
-        page: this.page,
+        scrollId: this.history.length
+          ? Math.min(...this.history.map((one) => one.scrollId))
+          : "",
       };
     },
-
   },
   watch: {
     isReachBottom() {
-      this.isReachBottom = false
-      if(this.noMore || this.loading) return
-      this.page++;
+      this.isReachBottom = false;
+      if (this.noMore || this.loading) return;
       this.getData();
     },
     isLogin(val) {
       if (val) {
-        this.refresh()
+        this.refresh();
       }
     },
     collected() {
-      this.refresh()
+      this.refresh();
     },
     isShow: {
       immediate: true,
@@ -88,39 +86,36 @@ export default {
       },
     },
   },
-  created(){
-    uni.$on('setReachBottom',()=>{
-      this.isReachBottom = true
-    })
-    uni.$on('refreshHistory',()=>{
-      needRefresh = true
-    })
-    uni.$on('refreshCollect',()=>{
-      needRefreshCollect = true
-    })
+  created() {
+    console.log("create");
+    uni.$on("setReachBottom", () => {
+      this.isReachBottom = true;
+    });
   },
-  beforeDestroy(){
-    uni.$off('refreshHistory')
-    uni.$off('refreshCollect')
-    uni.$off('setReachBottom')
+  beforeDestroy() {
+    uni.$off("setReachBottom");
   },
   methods: {
-    refresh(){
-      this.page = 1
-      this.history = []
+    ...mapMutations(["setNeedRefreshAll", "setNeedRefreshCollect"]),
+    refresh() {
+      this.scrollId = "";
+      this.history = [];
       this.noMore = false;
       this.getData();
     },
     checkAndLoadData() {
-      if (needRefresh||(needRefreshCollect&& this.collected)) {
+      if (
+        (!this.collected && this.needRefreshAll) ||
+        (this.needRefreshCollect && this.collected)
+      ) {
         try {
-          this.refresh()
+          this.refresh();
         } catch (e) {
           console.log(e);
         }
       }
-      needRefresh = false
-      needRefreshCollect = false
+      this.setNeedRefreshAll(false);
+      this.setNeedRefreshCollect(false);
     },
     checkIfShowPic() {
       let isSubscribeOk = uni.getStorageSync("isSubscribeOk");
@@ -138,8 +133,6 @@ export default {
       this.loading = true;
       try {
         let data = await getHistory(this.params);
-        // await this.$sleep()
-        // let data = mock;
         this.checkIsNoMore(data);
         this.history.push(...data);
       } catch (e) {
@@ -178,10 +171,10 @@ export default {
   .content {
     .no-login,
     .no-data {
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
-      align-items:center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       height: 400rpx;
       font-size: 28rpx;
       line-height: 40rpx;

@@ -173,6 +173,7 @@ export default {
       this.value = "";
       this.form = {};
       this.result = "";
+      this.setClipData('');
     },
     async generateBtnClick() {
       if (!this.isLogin) {
@@ -227,14 +228,13 @@ export default {
         font-size: 32rpx;
       }
       .textarea {
-        min-height: 220rpx;
-
+        height: 240rpx;
         font-size: 28rpx;
         word-break: break-all;
         // height: 240rpx;
         margin-top: 32rpx;
         width: 100%;
-        line-height: 1.4;
+        line-height: 40rpx;
         display: -webkit-box;
         overflow: hidden;
         text-overflow: ellipsis;

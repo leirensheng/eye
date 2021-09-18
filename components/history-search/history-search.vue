@@ -59,7 +59,7 @@ export default {
 
 <style scoped lang="scss">
 .history-page {
-  padding-top: 10rpx;
+  padding-top: 32rpx;
   position: relative;
   .one-history {
     margin-bottom: 32rpx;

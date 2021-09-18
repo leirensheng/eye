@@ -178,6 +178,7 @@ export default {
   text-align: left;
 
   .top {
+    border-bottom: 1rpx solid rgb(224, 224, 224);
     padding: 28rpx 24rpx;
     margin: 0 -24rpx;
     position: sticky;

@@ -26,9 +26,9 @@ export default {
     return {
       isShow: false,
       user: null,
-      historyType:0,
-      isLogin:false,
-      user:''
+      historyType: 0,
+      isLogin: false,
+      user: "",
     };
   },
   computed: {
@@ -39,19 +39,27 @@ export default {
       return this.isLogin ? this.user.nickName : "登录/注册";
     },
   },
-
+  onPullDownRefresh() {
+    uni.$emit("pullDown");
+  },
   async onReachBottom() {
-    uni.$emit('setReachBottom')
+    uni.$emit("setReachBottom");
   },
-
-  onHide(){
-    this.isShow = false
+  onLoad() {
+    uni.$on("stopPullDown", () => {
+      uni.stopPullDownRefresh();
+    });
   },
-  async onShow(){
-    this.isLogin = await this.$checkLogin()
+  onUnLoad() {
+    uni.$off("stopPullDown");
+  },
+  onHide() {
+    this.isShow = false;
+  },
+  async onShow() {
+    this.isShow = true;
+    this.isLogin = await this.$checkLogin();
     this.user = uni.getStorageSync("user");
-    this.isShow = true
-
   },
   methods: {
     clickName() {
@@ -90,7 +98,7 @@ export default {
     color: white;
     display: flex;
     align-items: center;
-    background: linear-gradient(180deg, #005CF6 0%, #004DCD 100%);
+    background: linear-gradient(180deg, #005cf6 0%, #004dcd 100%);
     .left {
       margin-left: 62rpx;
       height: 90rpx;

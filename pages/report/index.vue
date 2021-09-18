@@ -43,7 +43,7 @@
 <script>
 import { deleteReport, collect, noCollect, getDetail } from "@/api/eye.js";
 import { mapMutations } from "vuex";
-let isFromKnowledge = false;
+let isFromUser = true;
 export default {
   data() {
     return {
@@ -112,7 +112,6 @@ export default {
   mounted() {},
 
   onUnload() {
-    console.log("unload", this.data);
     uni.$off("loginStatus", this.backFromLogin);
     let isChange = this.isCollected !== this.data.collected;
     if (isChange) {
@@ -120,6 +119,11 @@ export default {
     }
   },
   async onLoad({ id }) {
+    isFromUser = this.$getPrePath()==='pages/user/index'
+    if(!isFromUser){
+      this.setShowTips()
+    }
+
     uni.$on("loginStatus", this.backFromLogin);
     this.id = id;
     uni.showLoading({
@@ -140,7 +144,7 @@ export default {
         this.getDetail();
       }
     },
-    ...mapMutations(["setNeedRefreshAll", "setNeedRefreshCollect"]),
+    ...mapMutations(["setNeedRefreshAll", "setNeedRefreshCollect","setShowTips"]),
 
     async getDetail() {
       let openId = uni.getStorageSync("openId");
@@ -153,13 +157,27 @@ export default {
       uni.hideLoading();
     },
     async remove() {
-      uni.showLoading({
-        title: "删除中",
+      uni.showModal({
+        title: "确定要删除此报告吗?",
+        content: " ",
+        success: async (res) => {
+          if (res.confirm) {
+            uni.showLoading({
+              title: "删除中",
+            });
+            await deleteReport(this.id);
+              uni.hideLoading();
+            if(isFromUser){
+              this.setNeedRefreshAll(true);
+              uni.navigateBack();
+            }else{
+              uni.redirectTo({
+                url:'/pages/index/index'
+              })
+            }
+          }
+        },
       });
-      await deleteReport(this.id);
-      uni.hideLoading();
-      this.setNeedRefreshAll(true);
-      uni.navigateBack();
     },
 
     async toggleCollect() {

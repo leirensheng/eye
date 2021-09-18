@@ -12,8 +12,10 @@ export default {
       return;
     }
     let clipData = await this.$getClip();
+    let isDifferent = this.$store.state.clipData!==clipData
     this.setClipData(clipData)
-    if (clipData.indexOf("http") !== -1) {
+    if (clipData.indexOf("http") !== -1&& isDifferent) {
+      if(clipData)
       uni.switchTab({
         url: "/pages/search/index",
       });
@@ -99,7 +101,27 @@ div {
   color: rgba(0, 0, 0, 0.85);
   padding-left: 16rpx;
   border-left: 12rpx solid #004dcd;
-  // line-height: 1;
   font-weight: 500;
+}
+.frame-light {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: linear-gradient(
+    130deg,
+    rgba(255, 255, 255, 0) 48%,
+    rgba(255, 255, 255, 0.5) 50%,
+    rgba(255, 255, 255, 0) 52%
+  );
+  background-size: 200% 100%;
+  background-position-x: 180%;
+  animation: 1.5s loading ease-in-out infinite;
+}
+@keyframes loading {
+  to {
+    background-position-x: -20%;
+  }
 }
 </style>

@@ -8,7 +8,8 @@ const store = new Vuex.Store({
         hasShowTips :false,
         clipData:'',
         needRefreshAll:false,
-        needRefreshCollect:false
+        needRefreshCollect:false,
+        isSubscribeOk:undefined,
 	},
 	mutations: {
         setShowTips(state){
@@ -22,6 +23,9 @@ const store = new Vuex.Store({
         },
         setNeedRefreshCollect(state,val){
             state.needRefreshCollect = val
+        },
+        setSubscribe(state,val){
+            state.isSubscribeOk = val
         },
 	},
 	actions: {

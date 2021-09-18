@@ -32,7 +32,7 @@ export function noCollect(id) {
     method:'delete',
     data:{
       openId,
-      ...id
+      id
     }
   });
 }

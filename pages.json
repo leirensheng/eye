@@ -27,6 +27,7 @@
 			"style": {
 				"navigationBarTitleText": "我的报告",
 				"navigationBarTextStyle": "#fff",
+				"enablePullDownRefresh": true,
 				"navigationBarBackgroundColor": "#005CF6"
 			}
 		},

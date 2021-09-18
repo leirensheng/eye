@@ -5,7 +5,7 @@
 
 
     <div class="bottom">
-      <div class="agree">
+      <!-- <div class="agree">
         <radio
           value="1"
           :checked="isAgree"
@@ -14,7 +14,7 @@
           @click="clickAgreeRadio"
         /><span @click="clickAgreeRadio">我已阅读并同意 CCC认证智能识别工具</span>
         <span class="xieyi" @click="gotoServiceAgreement">《用户协议》</span>
-      </div>
+      </div> -->
 
       <button
         class="btn1"
@@ -47,7 +47,7 @@ export default {
   data() {
     return {
       hasGetUser: false,
-      isAgree: false,
+      isAgree: true,
       code: "",
       isNewApi: false,
       loading: false,

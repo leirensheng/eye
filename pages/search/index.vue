@@ -58,8 +58,7 @@ export default {
   async onShow() {},
   onUnload() {
     uni.$off("analyse");
-    uni.$off("loginStatus",this.setLoginStatus);
-
+    uni.$off("loginStatus", this.setLoginStatus);
   },
   onLoad() {
     uni.$on("loginStatus", this.setLoginStatus);
@@ -68,9 +67,9 @@ export default {
   async created() {
     // 从介绍页面进来后,读取
     let clipData = await this.$getClip();
-    this.setClipData(clipData)
+    this.setClipData(clipData);
 
-    if(clipData.indexOf('http')!==-1){
+    if (clipData.indexOf("http") !== -1) {
       this.start();
     }
   },
@@ -109,21 +108,21 @@ export default {
     },
   },
   methods: {
-    setLoginStatus(val){
+    setLoginStatus(val) {
       this.isLogin = val;
     },
-    ...mapMutations(["setClipData","setNeedRefreshAll"]),
+    ...mapMutations(["setClipData", "setNeedRefreshAll","setSubscribe"]),
 
     async start() {
-      console.log('start')
+      console.log("start");
       this.loading = true;
       this.isLogin = await this.$checkLogin();
       this.loading = false;
 
       this.checkSubscribe();
-      
-      let clipData = this.$store.state.clipData
-      console.log('clipData')
+
+      let clipData = this.$store.state.clipData;
+      console.log("clipData");
       this.value = clipData;
       this.$nextTick(() => {
         this.analyseUrl();
@@ -158,14 +157,14 @@ export default {
         ...this.form,
         weChatNotify,
       });
-      console.log('生成完成')
-      this.setNeedRefreshAll(true)
+      console.log("生成完成");
+      this.setNeedRefreshAll(true);
       uni.hideLoading();
       this.loading = false;
       this.toReport(weChatNotify);
     },
     toReport(isSubscribeOk) {
-      uni.setStorageSync("isSubscribeOk", isSubscribeOk);
+      this.setSubscribe(isSubscribeOk)
       uni.switchTab({
         url: "/pages/user/index",
       });

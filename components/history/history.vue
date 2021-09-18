@@ -17,7 +17,11 @@
         <div class="name">暂无历史报告</div>
       </div>
       <div class="has-content" v-else>
-        <history-search :data="history" :noMore="noMore"></history-search>
+        <history-search
+          :data="history"
+          :isShowFrame="isShowFrame"
+          :noMore="noMore"
+        ></history-search>
       </div>
     </div>
     <reject-message v-model="isShowReject"></reject-message>
@@ -35,6 +39,8 @@ export default {
       loading: false,
       history: [],
       collected: 0,
+      scrollId: "",
+      isShowFrame: false,
       noMore: false,
       isShowReject: false,
       isShowAgree: false,
@@ -56,9 +62,7 @@ export default {
     params() {
       return {
         collected: this.collected,
-        scrollId: this.history.length
-          ? Math.min(...this.history.map((one) => one.scrollId))
-          : "",
+        scrollId: this.scrollId,
       };
     },
   },
@@ -91,23 +95,43 @@ export default {
     uni.$on("setReachBottom", () => {
       this.isReachBottom = true;
     });
+    uni.$on("pullDown", async () => {
+      await this.refresh();
+      uni.$emit("stopPullDown");
+    });
   },
   beforeDestroy() {
+    uni.$off("pullDown");
     uni.$off("setReachBottom");
   },
   methods: {
-    ...mapMutations(["setNeedRefreshAll", "setNeedRefreshCollect"]),
-    refresh() {
+    ...mapMutations([
+      "setNeedRefreshAll",
+      "setNeedRefreshCollect",
+      "setSubscribe",
+    ]),
+    async refresh() {
+      this.isShowFrame = true;
       this.scrollId = "";
       this.history = [];
       this.noMore = false;
-      this.getData();
+      let start = Date.now();
+      await this.getData();
+
+      let useTime = Date.now() - start;
+      let minTime = 350;
+      if (useTime < minTime) {
+        setTimeout(() => {
+          this.loading = false;
+          this.isShowFrame = false;
+        }, minTime - useTime);
+      } else {
+        this.loading = false;
+        this.isShowFrame = false;
+      }
     },
     checkAndLoadData() {
-      if (
-        (!this.collected && this.needRefreshAll) ||
-        (this.needRefreshCollect && this.collected)
-      ) {
+      if (this.needRefreshAll || (this.needRefreshCollect && this.collected)) {
         try {
           this.refresh();
         } catch (e) {
@@ -118,11 +142,11 @@ export default {
       this.setNeedRefreshCollect(false);
     },
     checkIfShowPic() {
-      let isSubscribeOk = uni.getStorageSync("isSubscribeOk");
+      let isSubscribeOk = this.$store.state.isSubscribeOk;
       if (typeof isSubscribeOk === "boolean") {
         this.isShowAgree = this.isSubscribeOk;
         this.isShowReject = !this.isSubscribeOk;
-        uni.removeStorageSync("isSubscribeOk");
+        this.setSubscribe(undefined);
       }
     },
     checkIsNoMore(data) {
@@ -133,6 +157,9 @@ export default {
       this.loading = true;
       try {
         let data = await getHistory(this.params);
+        if (data.length) {
+          this.scrollId = data.slice(-1)[0].id;
+        }
         this.checkIsNoMore(data);
         this.history.push(...data);
       } catch (e) {

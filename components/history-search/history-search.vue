@@ -1,31 +1,35 @@
 <template>
   <div class="history-page">
-    <div class="one-history" v-for="item in data" :key="item.id">
-      <history-item :item="item"></history-item>
+    <div class="one-history" v-for="item in dataForRender" :key="item.id">
+      <history-item :item="item" :isShowFrame="isShowFrame"></history-item>
     </div>
+    <div class="frame-light" v-if="isShowFrame"></div>
 
-    <load-more v-if="!noMore"></load-more>
-    <div class="no-more" v-else>没有更多了</div>
+    <template v-if="!isShowFrame">
+      <load-more v-if="!noMore"></load-more>
+      <div class="no-more" v-else>没有更多了</div>
+    </template>
   </div>
 </template>
 
 <script>
-
 export default {
   data() {
-    return {
-
-    };
+    return {};
   },
   props: {
     noMore: {
       type: Boolean,
       default: false,
     },
-    data:{
-      type:Array,
-      default:[]
-    }
+    isShowFrame: {
+      type: Boolean,
+      default: false,
+    },
+    data: {
+      type: Array,
+      default: [],
+    },
   },
 
   created() {
@@ -33,35 +37,37 @@ export default {
   },
   beforeDestroy() {},
   computed: {
-
+    dataForRender() {
+      let length = this.data.length || 5;
+      if (this.isShowFrame) {
+        return Array.from({ length }, () => ({
+          // genStatus:0
+        }));
+      }
+      return this.data;
+    },
   },
-  watch: {
-
-  },
+  watch: {},
 
   onLoad() {},
   mounted() {},
-  async onShow() {
-   
-  },
+  async onShow() {},
 
-  methods: {
-
-
-  },
+  methods: {},
 };
 </script>
 
 <style scoped lang="scss">
 .history-page {
   padding-top: 10rpx;
+  position: relative;
   .one-history {
     margin-bottom: 32rpx;
     &:last-child {
       margin-bottom: 0;
     }
   }
-  .no-more{
+  .no-more {
     text-align: center;
     font-size: 28rpx;
   }

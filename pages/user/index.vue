@@ -21,6 +21,8 @@
 </template>
 
 <script>
+import { mapMutations } from "vuex";
+
 export default {
   data() {
     return {
@@ -62,13 +64,15 @@ export default {
     this.user = uni.getStorageSync("user");
   },
   methods: {
+    ...mapMutations(['setNoStartWhenCreated']),
     clickName() {
       if (!this.isLogin) {
         this.$toLogin();
       }
     },
     toHome() {
-      uni.redirectTo({
+      this.setNoStartWhenCreated()
+      uni.reLaunch({
         url: "/pages/index/index",
       });
     },

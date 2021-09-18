@@ -91,7 +91,6 @@ export default {
     },
   },
   created() {
-    console.log("create");
     uni.$on("setReachBottom", () => {
       this.isReachBottom = true;
     });

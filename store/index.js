@@ -10,6 +10,7 @@ const store = new Vuex.Store({
         needRefreshAll:false,
         needRefreshCollect:false,
         isSubscribeOk:undefined,
+        noStartWhenCreated: false,
 	},
 	mutations: {
         setShowTips(state){
@@ -27,6 +28,9 @@ const store = new Vuex.Store({
         setSubscribe(state,val){
             state.isSubscribeOk = val
         },
+        setNoStartWhenCreated(state){
+            state.noStartWhenCreated= true
+        }
 	},
 	actions: {
     }

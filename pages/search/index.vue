@@ -59,12 +59,14 @@ export default {
   onUnload() {
     uni.$off("analyse");
     uni.$off("loginStatus", this.setLoginStatus);
+    this.setClipData('');
   },
   onLoad() {
     uni.$on("loginStatus", this.setLoginStatus);
     uni.$on("analyse", this.start);
   },
   async created() {
+    if(this.$store.state.noStartWhenCreated) return
     // 从介绍页面进来后,读取
     let clipData = await this.$getClip();
     this.setClipData(clipData);

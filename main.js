@@ -70,7 +70,9 @@ Vue.prototype.$getClip=()=>{
       },
     });
   });
-},
+}
+
+Vue.prototype.$isUrl = (val)=> val.indexOf("http") !== -1
 App.mpType = "app";
 
 const app = new Vue({

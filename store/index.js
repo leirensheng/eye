@@ -5,7 +5,7 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
 	state: {
-        hasShowTips :false,
+        isAppShowRead :true,
         clipData:'',
         needRefreshAll:false,
         needRefreshCollect:false,
@@ -13,8 +13,8 @@ const store = new Vuex.Store({
         noStartWhenCreated: false,
 	},
 	mutations: {
-        setShowTips(state){
-            state.hasShowTips = true
+        setAppShowRead(state,val){
+            state.isAppShowRead = val
         },
         setClipData(state,val){
             state.clipData = val

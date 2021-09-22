@@ -71,7 +71,7 @@ export default {
     let clipData = await this.$getClip();
     this.setClipData(clipData);
 
-    if (clipData.indexOf("http") !== -1) {
+    if (this.$isUrl(clipData)) {
       this.start();
     }
   },
@@ -116,7 +116,6 @@ export default {
     ...mapMutations(["setClipData", "setNeedRefreshAll","setSubscribe"]),
 
     async start() {
-      console.log("start");
       this.loading = true;
       this.isLogin = await this.$checkLogin();
       this.loading = false;
@@ -124,7 +123,6 @@ export default {
       this.checkSubscribe();
 
       let clipData = this.$store.state.clipData;
-      console.log("clipData");
       this.value = clipData;
       this.$nextTick(() => {
         this.analyseUrl();
@@ -159,7 +157,6 @@ export default {
         ...this.form,
         weChatNotify,
       });
-      console.log("生成完成");
       this.setNeedRefreshAll(true);
       uni.hideLoading();
       this.loading = false;

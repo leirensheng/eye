@@ -7,9 +7,9 @@
       </div>
       <div class="right">
         <div class="title">{{ data.productName }}</div>
-        <div class="bottom">
+        <div class="subtitle">
           <div class="date">{{ $formatTime(data.createDate) }}</div>
-          <div>商品来源：{{ platformName }}</div>
+          <div v-if="platformName">商品来源：{{ platformName }}</div>
         </div>
       </div>
     </div>
@@ -108,7 +108,9 @@ export default {
       path: "/pages/report/index?id=" + this.id,
     };
   },
-  created() {},
+  created() {
+    console.log("report create");
+  },
   mounted() {},
 
   onUnload() {
@@ -119,10 +121,10 @@ export default {
     }
   },
   async onLoad({ id }) {
-    isFromUser = this.$getPrePath()==='pages/user/index'
-    if(!isFromUser){
-      this.setShowTips()
-    }
+    this.setAppShowRead(false);
+    setTimeout(() => {
+      this.setAppShowRead(true);
+    }, 1000);
 
     uni.$on("loginStatus", this.backFromLogin);
     this.id = id;
@@ -144,7 +146,11 @@ export default {
         this.getDetail();
       }
     },
-    ...mapMutations(["setNeedRefreshAll", "setNeedRefreshCollect","setShowTips"]),
+    ...mapMutations([
+      "setNeedRefreshAll",
+      "setNeedRefreshCollect",
+      "setAppShowRead",
+    ]),
 
     async getDetail() {
       let openId = uni.getStorageSync("openId");
@@ -166,14 +172,14 @@ export default {
               title: "删除中",
             });
             await deleteReport(this.id);
-              uni.hideLoading();
-            if(isFromUser){
+            uni.hideLoading();
+            if (isFromUser) {
               this.setNeedRefreshAll(true);
               uni.navigateBack();
-            }else{
-              uni.redirectTo({
-                url:'/pages/index/index'
-              })
+            } else {
+              uni.reLaunch({
+                url: "/pages/index/index",
+              });
             }
           }
         },
@@ -228,7 +234,7 @@ export default {
         margin-bottom: 24rpx;
         line-height: 44rpx;
       }
-      .bottom {
+      .subtitle {
         line-height: 40rpx;
         font-size: 28rpx;
         color: #999999;

@@ -79,12 +79,10 @@ export default {
           id: "effectiveDate",
           name: "证书有效期",
           lightName: this.isExpired,
-          // lightName:true,
-          // width: 143,
+          type:'date'
         },
         {
           id: "executeStander",
-          // width: 143,
           name: "执行标准",
         },
         {
@@ -192,7 +190,7 @@ export default {
     formatAndCompare(val, id) {
       let isNOData = this.checkIsLost(val);
       if (isNOData) {
-        return '<div class="certificateNo">未查询到</div>';
+        return '<div class="no">未查询到</div>';
       }
       let valToCompare = this.data[id];
 
@@ -271,6 +269,7 @@ export default {
       font-size: 28rpx;
       line-height: 40rpx;
       margin-top: 16rpx;
+      text-align: justify;
     }
   }
   .se-wen {

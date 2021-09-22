@@ -6,16 +6,17 @@ export default {
       isClose: false,
     };
   },
-  created(){
-    this.checkSubscribe()
+  created() {
+    this.checkSubscribe();
   },
   methods: {
     checkSubscribe() {
       wx.getSetting({
         withSubscriptions: true,
         success: (res) => {
+          console.log(res.subscriptionsSetting);
           let { itemSettings, mainSwitch } = res.subscriptionsSetting;
-          if (!mainSwitch || itemSettings[id] === "reject") {
+          if (!mainSwitch || (itemSettings && itemSettings[id] === "reject")) {
             this.isClose = true;
           }
           // console.log(res.subscriptionsSetting);

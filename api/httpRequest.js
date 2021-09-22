@@ -33,10 +33,9 @@ let http = (option) => {
       fail: (res) => {
         uni.showToast({
           icon: "none",
-          title: '请求失败',
+          title: '网络不给力，请稍后再试~',
           duration: 2000,
         });
-        // uni.toast("网络不给力，请稍后再试~");
         reject(res);
       },
       complete: () => {},

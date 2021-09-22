@@ -79,12 +79,15 @@ export default {
   },
   computed: {
   },
-  created() {
-    this.setShowTips();
+  onLoad() {
+    this.setAppShowRead(false)
+  },
+  onUnload(){
+    this.setAppShowRead(true)
   },
   mounted() {},
   methods: {
-    ...mapMutations(["setShowTips"]),
+    ...mapMutations(["setAppShowRead"]),
     open() {
       uni.switchTab({
         url: "/pages/search/index",

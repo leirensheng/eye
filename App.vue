@@ -6,23 +6,23 @@ export default {
     console.log("App Launch");
   },
   async onShow() {
-    console.log("App Show");
-    // 首次进入进入介绍页面,不跳转,不读取
-    if (!this.$store.state.hasShowTips) {
-      return;
-    }
-    let clipData = await this.$getClip();
-    let isDifferent = this.$store.state.clipData!==clipData
-    this.setClipData(clipData)
-    if (clipData.indexOf("http") !== -1&& isDifferent) {
-      if(clipData)
-      uni.switchTab({
-        url: "/pages/search/index",
-      });
-      uni.$emit("analyse");
-    }
+    setTimeout(async () => {
+      if (!this.$store.state.isAppShowRead) {
+        return;
+      }
+      let clipData = await this.$getClip();
+      let isDifferent = this.$store.state.clipData !== clipData;
+      this.setClipData(clipData);
+      if (this.$isUrl(clipData) && isDifferent) {
+        if (clipData)
+          uni.switchTab({
+            url: "/pages/search/index",
+          });
+        uni.$emit("analyse");
+      }
+    }, 100);
   },
-  methods:{
+  methods: {
     ...mapMutations(["setClipData"]),
   },
   onHide: function () {

@@ -32,17 +32,12 @@ export default {
     },
   },
 
-  created() {
-    // this.getData();
-  },
   beforeDestroy() {},
   computed: {
     dataForRender() {
       let length = this.data.length || 5;
       if (this.isShowFrame) {
-        return Array.from({ length }, () => ({
-          // genStatus:0
-        }));
+        return Array.from({ length }, () => ({}));
       }
       return this.data;
     },

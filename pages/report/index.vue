@@ -103,6 +103,7 @@ export default {
     },
   },
   async onShareAppMessage() {
+    this.setAppShowRead(false);
     return {
       title: "报告详情",
       path: "/pages/report/index?id=" + this.id,
@@ -120,12 +121,13 @@ export default {
       this.setNeedRefreshCollect(true);
     }
   },
-  async onLoad({ id }) {
-    this.setAppShowRead(false);
+  onShow() {
     setTimeout(() => {
       this.setAppShowRead(true);
     }, 1000);
-
+  },
+  async onLoad({ id }) {
+    this.setAppShowRead(false);
     uni.$on("loginStatus", this.backFromLogin);
     this.id = id;
     uni.showLoading({

@@ -99,9 +99,20 @@ div {
   font-size: 32rpx;
   line-height: 44rpx;
   color: rgba(0, 0, 0, 0.85);
-  padding-left: 16rpx;
-  border-left: 12rpx solid #004dcd;
+  padding-left: 28rpx;
   font-weight: 500;
+  position: relative;
+  &:before{
+    display: block;
+    content: '';
+    position: absolute;
+    left: 0;
+    top:50%;
+    height: 80%;
+    transform: translateY(-50%);
+    width: 12rpx;
+    background: #004dcd ;
+  }
 }
 .frame-light {
   position: absolute;

@@ -127,6 +127,7 @@ export default {
     }, 1000);
   },
   async onLoad({ id }) {
+    isFromUser = this.$getPrePath()==='pages/user/index'
     this.setAppShowRead(false);
     uni.$on("loginStatus", this.backFromLogin);
     this.id = id;

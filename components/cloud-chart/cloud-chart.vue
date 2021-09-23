@@ -1,7 +1,12 @@
 <template>
   <view class="cloud-chart">
     <div class="hight-title">评论质量关键词词云</div>
+    <div class="no-data" v-if="keyword.length === 0">
+      <image class="icon" mode="widthFix" src="/static/no-data.svg"></image>
+      <div class="desc">暂无数据</div>
+    </div>
     <qiun-data-charts
+      v-else
       canvas2d
       class="charts-box"
       canvas-id="canvasPiehhjhhjhvgg"
@@ -64,6 +69,26 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.cloud-chart {
+  .no-data {
+    padding: 64rpx 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    .icon {
+      transform: translateX(5%);
+      width: 384rpx;
+    }
+    .desc {
+      width: 368rpx;
+      font-size: 28rpx;
+      line-height: 40rpx;
+      margin-top: 32rpx;
+      text-align: center;
+    }
+  }
+}
 .box {
   padding: 30rpx;
   .title {

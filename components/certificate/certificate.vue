@@ -128,6 +128,9 @@ export default {
     width: 210rpx;
     margin-bottom: 48rpx;
   }
+  :nth-child(2){
+    width: 100%;
+  }
 }
 </style>
 <style lang="scss">

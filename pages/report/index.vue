@@ -1,5 +1,5 @@
 <template>
-  <div class="report">
+  <div class="report" :class="isOwner?'has-fixed':'no-fixed'">
     <div class="main">
       <div class="left">
         <div>合规性</div>
@@ -23,7 +23,7 @@
       <certificate v-show="tab === 3" :data="certificateData"></certificate>
     </div>
 
-    <div class="bottom">
+    <div class="bottom" v-if="isOwner">
       <div class="left" @click="remove">
         <image class="icon" mode="widthFix" src="/static/delete.svg"></image>
         <div>删除报告</div>
@@ -50,6 +50,7 @@ export default {
       data: {},
       isCollected: false,
       tab: 0,
+      isOwner: false,
       tabs: [
         {
           name: "合规性评价",
@@ -163,6 +164,7 @@ export default {
       });
       this.data = await getDetail(this.id);
       this.isCollected = this.data.collected;
+      this.isOwner = this.data.openId === openId
       uni.hideLoading();
     },
     async remove() {
@@ -209,7 +211,12 @@ export default {
 
 <style scoped lang="scss">
 .report {
-  @include fixed-bottom(100rpx);
+  &.has-fixed{
+    @include fixed-bottom(100rpx);
+  }
+  &.no-fixed{
+    @include fixed-bottom(0rpx);
+  }
   .main {
     padding: 56rpx 26rpx 46rpx 48rpx;
     display: flex;

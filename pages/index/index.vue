@@ -51,10 +51,10 @@
       </swiper-item>
     </swiper>
     <div class="bottom">
-      <div class="next-btn" v-if="current < 3" @click="next">下一步</div>
-      <div class="next-btn open-btn" v-if="current === 3" @click="open">
+      <button class="next-btn" v-if="current < 3" @click="next">下一步</button>
+      <button class="next-btn open-btn" v-if="current === 3" @click="open">
         立即开启
-      </div>
+      </button>
       <div class="dots">
         <div
           class="dot"
@@ -77,13 +77,12 @@ export default {
       current: 0,
     };
   },
-  computed: {
-  },
+  computed: {},
   onLoad() {
-    this.setAppShowRead(false)
+    this.setAppShowRead(false);
   },
-  onUnload(){
-    this.setAppShowRead(true)
+  onUnload() {
+    this.setAppShowRead(true);
   },
   mounted() {},
   methods: {
@@ -226,10 +225,17 @@ export default {
       font-weight: 500;
       border: 2rpx solid #999999;
       margin-bottom: 48rpx;
+      background: white;
+      &:active {
+        background: rgb(243, 243, 243);
+      }
     }
     .open-btn {
       color: white;
       background: linear-gradient(180deg, #0060ff 0%, #004dcd 100%);
+      &:active {
+        background: linear-gradient(180deg, #005bec 0%, #0145b1 100%);
+      }
     }
     .dots {
       display: flex;

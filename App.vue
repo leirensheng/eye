@@ -77,6 +77,9 @@ div {
   display: flex;
   justify-content: center;
   align-items: center;
+  &:active {
+    background-color: #2f53d4;
+  }
 }
 .btn-primary {
   width: 100%;
@@ -102,16 +105,16 @@ div {
   padding-left: 28rpx;
   font-weight: 500;
   position: relative;
-  &:before{
+  &:before {
     display: block;
-    content: '';
+    content: "";
     position: absolute;
     left: 0;
-    top:50%;
+    top: 50%;
     height: 80%;
     transform: translateY(-50%);
     width: 12rpx;
-    background: #004dcd ;
+    background: #004dcd;
   }
 }
 .frame-light {

@@ -2,9 +2,10 @@
   <div class="certificate">
     <div class="hight-title">健康照明产品质量等级认证证书</div>
     <div class="wrap">
-      <image mode="widthFix" class="pic" :src="src"></image>
+      <image  v-if="src" mode="widthFix" class="pic" :src="src"></image>
       <key-value :data="data" :config="config" 
       rowPadding="16rpx"
+      class="content"
       noDataShowDash
       :valueFontWeight="800"
       :valueWidth="470"></key-value>
@@ -128,7 +129,7 @@ export default {
     width: 210rpx;
     margin-bottom: 48rpx;
   }
-  :nth-child(2){
+  .content{
     width: 100%;
   }
 }

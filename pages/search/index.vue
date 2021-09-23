@@ -113,7 +113,7 @@ export default {
     setLoginStatus(val) {
       this.isLogin = val;
     },
-    ...mapMutations(["setClipData", "setNeedRefreshAll","setSubscribe"]),
+    ...mapMutations(["setClipData", "setNeedRefreshLeft","setSubscribe"]),
 
     async start() {
       this.loading = true;
@@ -157,7 +157,7 @@ export default {
         ...this.form,
         weChatNotify,
       });
-      this.setNeedRefreshAll(true);
+      this.setNeedRefreshLeft(true);
       uni.hideLoading();
       this.loading = false;
       this.toReport(weChatNotify);

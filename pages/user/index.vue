@@ -28,7 +28,6 @@ export default {
     return {
       isShow: false,
       user: null,
-      historyType: 0,
       isLogin: false,
       user: "",
     };

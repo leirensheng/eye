@@ -58,7 +58,7 @@ export default {
     },
   },
   computed: {
-    ...mapState(["needRefreshAll", "needRefreshCollect"]),
+    ...mapState(["needRefreshAll", "needRefreshCollect","needRefreshLeft"]),
     params() {
       return {
         collected: this.collected,
@@ -84,8 +84,8 @@ export default {
       immediate: true,
       handler(val) {
         if (val) {
-          this.checkAndLoadData();
           this.checkIfShowPic();
+          this.checkAndLoadData();
         }
       },
     },
@@ -107,6 +107,7 @@ export default {
     ...mapMutations([
       "setNeedRefreshAll",
       "setNeedRefreshCollect",
+      "setNeedRefreshLeft",
       "setSubscribe",
     ]),
     async refresh() {
@@ -130,7 +131,7 @@ export default {
       }
     },
     checkAndLoadData() {
-      if (this.needRefreshAll || (this.needRefreshCollect && this.collected)) {
+      if (this.needRefreshAll ||(this.needRefreshLeft&& !this.collected)|| (this.needRefreshCollect && this.collected)) {
         try {
           this.refresh();
         } catch (e) {
@@ -139,6 +140,7 @@ export default {
       }
       this.setNeedRefreshAll(false);
       this.setNeedRefreshCollect(false);
+      this.setNeedRefreshLeft(false)
     },
     checkIfShowPic() {
       let isSubscribeOk = this.$store.state.isSubscribeOk;
@@ -146,6 +148,7 @@ export default {
         this.isShowAgree = this.isSubscribeOk;
         this.isShowReject = !this.isSubscribeOk;
         this.setSubscribe(undefined);
+        this.collected = 0
       }
     },
     checkIsNoMore(data) {

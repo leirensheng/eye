@@ -8,6 +8,7 @@ const store = new Vuex.Store({
         isAppShowRead :true,
         clipData:'',
         needRefreshAll:false,
+        needRefreshLeft:false,
         needRefreshCollect:false,
         isSubscribeOk:undefined,
         noStartWhenCreated: false,
@@ -21,6 +22,9 @@ const store = new Vuex.Store({
         },
         setNeedRefreshAll(state,val){
             state.needRefreshAll = val
+        },
+        setNeedRefreshLeft(state,val){
+            state.needRefreshLeft = val
         },
         setNeedRefreshCollect(state,val){
             state.needRefreshCollect = val

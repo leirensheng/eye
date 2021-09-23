@@ -58,7 +58,7 @@ export default {
     },
   },
   computed: {
-    ...mapState(["needRefreshAll", "needRefreshCollect","needRefreshLeft"]),
+    ...mapState(["needRefreshAll", "needRefreshCollect", "needRefreshLeft"]),
     params() {
       return {
         collected: this.collected,
@@ -115,23 +115,35 @@ export default {
       this.scrollId = "";
       this.history = [];
       this.noMore = false;
-      let start = Date.now();
-      await this.getData();
-
-      let useTime = Date.now() - start;
-      let minTime = 350;
-      if (useTime < minTime) {
-        setTimeout(() => {
-          this.loading = false;
-          this.isShowFrame = false;
-        }, minTime - useTime);
-      } else {
-        this.loading = false;
-        this.isShowFrame = false;
-      }
+      let minDelayGetData = this.minDelay(this.getData, 350);
+      await minDelayGetData();
+      this.loading = false;
+      this.isShowFrame = false;
     },
+
+    minDelay(fn, minTime) {
+      let sleep = (time) =>
+        new Promise((resolve) => {
+          setTimeout(resolve, time);
+        });
+      return async (...args) => {
+        let start = Date.now();
+        let res = await fn.call(this, ...args);
+        let useTime = Date.now() - start;
+        if (useTime < minTime) {
+          await sleep(minTime - useTime);
+          return res;
+        }
+        return res;
+      };
+    },
+
     checkAndLoadData() {
-      if (this.needRefreshAll ||(this.needRefreshLeft&& !this.collected)|| (this.needRefreshCollect && this.collected)) {
+      if (
+        this.needRefreshAll ||
+        (this.needRefreshLeft && !this.collected) ||
+        (this.needRefreshCollect && this.collected)
+      ) {
         try {
           this.refresh();
         } catch (e) {
@@ -140,7 +152,7 @@ export default {
       }
       this.setNeedRefreshAll(false);
       this.setNeedRefreshCollect(false);
-      this.setNeedRefreshLeft(false)
+      this.setNeedRefreshLeft(false);
     },
     checkIfShowPic() {
       let isSubscribeOk = this.$store.state.isSubscribeOk;
@@ -148,7 +160,7 @@ export default {
         this.isShowAgree = this.isSubscribeOk;
         this.isShowReject = !this.isSubscribeOk;
         this.setSubscribe(undefined);
-        this.collected = 0
+        this.collected = 0;
       }
     },
     checkIsNoMore(data) {

@@ -130,7 +130,7 @@ div {
     rgba(255, 255, 255, 0) 52%
   );
   background-size: 200% 100%;
-  background-position-x: 180%;
+  background-position-x: 140%;
   animation: 1.5s loading ease-in-out infinite;
 }
 @keyframes loading {

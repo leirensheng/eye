@@ -10,11 +10,11 @@
     <div class="bottom">
       <div class="left">
         <div class="key">抽检发布时间</div>
-        <div class="value">{{ data.date }}</div>
+        <div class="value">{{ $formatDate(data.notificationDate) }}</div>
       </div>
       <div class="right">
         <div class="key">抽检行政机构</div>
-        <div class="value">{{ data.region }}</div>
+        <div class="value">{{ data.administration }}</div>
       </div>
     </div>
   </div>
@@ -26,15 +26,15 @@ export default {
     return {
       config: [
         {
-          id: "name",
+          id: "productName",
           name: "名称",
         },
         {
-          id: "specifications",
+          id: "model",
           name: "型号",
         },
         {
-          id: "item",
+          id: "failedItem",
           name: "不合格项",
         },
       ],

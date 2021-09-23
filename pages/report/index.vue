@@ -82,7 +82,7 @@ export default {
     qualityData() {
       return {
         product: this.data.producerQuantity || [],
-        category: this.data.producerQuantity || [],
+        category: this.data.categoryQuantity || [],
         keyword: this.data.keywords,
       };
     },

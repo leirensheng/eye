@@ -56,7 +56,6 @@ Vue.prototype.$toPage = (page) => {
 };
 Vue.prototype.$getPrePath = () => {
   let pages = getCurrentPages(); //页面对象
-  console.log(pages);
   let prePage = pages.slice(-2)[0];
   return prePage && prePage.route;
 };

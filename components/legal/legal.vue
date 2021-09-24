@@ -207,7 +207,6 @@ export default {
         ? `<div class="red">网页展示商品信息不一致，需向客服核实</div>`
         : "";
       let res = valStr + tipsStr;
-      console.log(res);
       return res;
     },
   },

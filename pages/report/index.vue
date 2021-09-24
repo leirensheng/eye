@@ -1,5 +1,5 @@
 <template>
-  <div class="report" :class="isOwner?'has-fixed':'no-fixed'">
+  <div class="report" :class="isOwner ? 'has-fixed' : 'no-fixed'">
     <div class="main">
       <div class="left">
         <div>合规性</div>
@@ -18,7 +18,8 @@
     </div>
     <div class="content">
       <legal v-show="tab === 0" :data="legalData"></legal>
-      <quality v-show="tab === 1" :data="qualityData"></quality>
+      <!-- 词云需要v-if -->
+      <quality v-if="tab === 1" :data="qualityData"></quality>
       <consume v-show="tab === 2"></consume>
       <certificate v-show="tab === 3" :data="certificateData"></certificate>
     </div>
@@ -110,9 +111,7 @@ export default {
       path: "/pages/report/index?id=" + this.id,
     };
   },
-  created() {
-    console.log("report create");
-  },
+  created() {},
   mounted() {},
 
   onUnload() {
@@ -128,7 +127,7 @@ export default {
     }, 1000);
   },
   async onLoad({ id }) {
-    isFromUser = this.$getPrePath()==='pages/user/index'
+    isFromUser = this.$getPrePath() === "pages/user/index";
     this.setAppShowRead(false);
     uni.$on("loginStatus", this.backFromLogin);
     this.id = id;
@@ -164,7 +163,7 @@ export default {
       });
       this.data = await getDetail(this.id);
       this.isCollected = this.data.collected;
-      this.isOwner = this.data.openId === openId
+      this.isOwner = this.data.openId === openId;
       uni.hideLoading();
     },
     async remove() {
@@ -211,10 +210,10 @@ export default {
 
 <style scoped lang="scss">
 .report {
-  &.has-fixed{
+  &.has-fixed {
     @include fixed-bottom(100rpx);
   }
-  &.no-fixed{
+  &.no-fixed {
     @include fixed-bottom(0rpx);
   }
   .main {
@@ -243,6 +242,11 @@ export default {
         text-align: justify;
         margin-bottom: 24rpx;
         line-height: 44rpx;
+        display: -webkit-box;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 3;
       }
       .subtitle {
         line-height: 40rpx;

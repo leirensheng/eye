@@ -31,7 +31,7 @@
         <div class="no-info-message">
           此链接未收集到必要信息，请您向客服或厂商索要证书编号、制造商或生产厂名称、产品规格型号、功率参数信息
         </div>
-        <my-form v-model="form"></my-form>
+        <my-form v-model="form" @isOk="handleIsOk"></my-form>
       </div>
       <button :disabled="isDisabled" class="btn" @click="generateBtnClick">
         生成合规性报告
@@ -80,6 +80,7 @@ export default {
       result: "",
       value: "",
       form: {},
+      isFormOk:false,
       isLogin: false,
       loading: false,
       placeholder:
@@ -94,7 +95,7 @@ export default {
       return arr.some((key) => [undefined, ""].includes(this.result[key]));
     },
     isDisabled() {
-      return this.value.length === 0 || !this.isPlaformMatch || this.loading;
+      return this.value.length === 0 || !this.isPlaformMatch || this.loading|| !this.isFormOk;
     },
     isPlaformMatch() {
       return ["TB", "TM", "JD", "PDD"].includes((this.result || {}).platform);
@@ -110,6 +111,9 @@ export default {
     },
   },
   methods: {
+    handleIsOk(val){
+      this.isFormOk = val
+    },
     setLoginStatus(val) {
       this.isLogin = val;
     },

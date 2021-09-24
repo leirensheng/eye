@@ -28,14 +28,6 @@ export default {
   },
   computed: {
     wordData() {
-      let res = {
-        series: this.keyword.map((one) => ({
-          name: one.keyword,
-          textSize: this.getSize(one.discoveryTimes),
-        })),
-      };
-      console.log(res);
-      return res;
       return {
         series: this.keyword.map((one) => ({
           name: one.keyword,
@@ -59,9 +51,9 @@ export default {
   },
   methods: {
     getSize(val) {
-      let minSize = 14;
+      let minSize = 18;
       let maxSize = 28;
-      let k = (maxSize - minSize) / (this.max - this.min);
+      let k =this.max===this.min?1: (maxSize - minSize) / (this.max - this.min);
       return k * val + minSize;
     },
   },

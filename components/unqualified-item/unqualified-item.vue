@@ -72,7 +72,7 @@ export default {
     font-size: 24rpx;
     color: #999999;
 
-    line-height: 34rpx;
+    line-height: 40rpx;
     font-weight: 400;
   }
   .value {

@@ -1,9 +1,9 @@
 import env from './getEnv.js'
 let map={
-  develop:'http://192.168.2.14:38080/intelligent-identify',
-  trial:'http://192.168.2.14:38080/intelligent-identify',
+  develop:'http://192.168.1.206:38080/intelligent-identify',
+  trial:'https://intel.gdcers.com/intelligent-identify',
 }
-let baseUrl = map[env]||"'http://192.168.2.14:38080/intelligent-identify'"
+let baseUrl = map[env]||"https://intel.gdcers.com/intelligent-identify"
 let http = (option) => {
   let { timeout = 60000, data, method = "get",url } = option;
   return new Promise((resolve, reject) => {

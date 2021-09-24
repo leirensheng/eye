@@ -6,7 +6,7 @@
       <div class="card">
         <div class="clip-title">我的剪贴板</div>
         <div class="textarea" v-if="value">{{ value }}</div>
-        <div class="textarea no-data" v-else>
+        <div class="textarea no-text" v-else>
           请复制淘宝、天猫、京东、拼多多手机端室内照明产品的链接，打开小程序即可自动粘贴
         </div>
         <!-- <textarea
@@ -256,7 +256,7 @@ export default {
         -webkit-box-orient: vertical;
         -webkit-line-clamp: 6;
       }
-      .no-data {
+      .no-text {
         color: #999999;
       }
       .right {

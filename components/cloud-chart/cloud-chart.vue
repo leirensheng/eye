@@ -53,7 +53,8 @@ export default {
     getSize(val) {
       let minSize = 18;
       let maxSize = 28;
-      let k =this.max===this.min?1: (maxSize - minSize) / (this.max - this.min);
+      let k =
+        this.max === this.min ? 1 : (maxSize - minSize) / (this.max - this.min);
       return k * val + minSize;
     },
   },

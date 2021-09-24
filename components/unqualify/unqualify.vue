@@ -70,24 +70,6 @@ export default {
 <style scoped lang="scss">
 .unqualify {
   margin-bottom: 48rpx;
-  .no-data {
-    padding: 64rpx 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    .icon {
-      transform: translateX(5%);
-      width: 384rpx;
-    }
-    .desc {
-      width: 368rpx;
-      font-size: 28rpx;
-      line-height: 40rpx;
-      margin-top: 32rpx;
-      text-align: center;
-    }
-  }
   .items {
     padding: 32rpx 0 16rpx 0;
     .item {

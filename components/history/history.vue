@@ -12,9 +12,9 @@
         <div>请登录后查看历史报告></div>
       </div>
 
-      <div class="no-data" v-else-if="!loading && !history.length">
+      <div class="no-history" v-else-if="!loading && !history.length">
         <image class="icon" mode="widthFix" src="/static/no-data.svg"></image>
-        <div class="name">暂无历史报告</div>
+        <div class="name">{{ noReportName }}</div>
       </div>
       <div class="has-content" v-else>
         <history-search
@@ -59,6 +59,9 @@ export default {
   },
   computed: {
     ...mapState(["needRefreshAll", "needRefreshCollect", "needRefreshLeft"]),
+    noReportName() {
+      return this.collected ? "暂无收藏报告" : "暂无历史报告";
+    },
     params() {
       return {
         collected: this.collected,
@@ -212,24 +215,22 @@ export default {
   }
   .content {
     .no-login,
-    .no-data {
+    .no-history {
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      height: 400rpx;
+      height: 480rpx;
       font-size: 28rpx;
       line-height: 40rpx;
       color: black;
       font-weight: 400;
       text-align: center;
-    }
-    .no-data {
-      transform: translateX(10rpx);
       .name {
-        transform: translateX(-10rpx) translateY(12px);
+        margin-top: 32rpx;
       }
       .icon {
+        transform: translateX(10rpx);
         width: 476rpx;
       }
     }

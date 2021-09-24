@@ -3,7 +3,7 @@
     <div class="top">
       <div class="row" v-for="(item, index) in config" :key="index">
         <div class="key">{{ item.name }}</div>
-        <div class="value">{{ data[item.id] }}</div>
+        <div class="value">{{ data[item.id] || "-" }}</div>
       </div>
     </div>
 

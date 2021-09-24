@@ -231,6 +231,7 @@ export default {
       }
     }
     .open-btn {
+      border: none;
       color: white;
       background: linear-gradient(180deg, #0060ff 0%, #004dcd 100%);
       &:active {
@@ -246,7 +247,7 @@ export default {
         height: 16rpx;
         border-radius: 50%;
         background: #e8e8e8;
-        margin: 0 36rpx;
+        margin: 0 18rpx;
         &.active {
           width: 36rpx;
           height: 16rpx;

@@ -58,6 +58,7 @@ export default {
   mounted() {},
   methods: {
     toDetail() {
+      if (this.item.genStatus === 0) return;
       uni.navigateTo({
         url: "/pages/report/index?id=" + this.item.id,
       });

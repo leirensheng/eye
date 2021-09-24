@@ -50,6 +50,7 @@ export default {
     max-height: 95%;
     transition: all 0.3s cubic-bezier(0.7, 0.51, 0.02, 1.1);
     transform: scale(0);
+    transform-origin: 0% 0%;
     overflow: visible;
     &.show {
       transform: scale(1);

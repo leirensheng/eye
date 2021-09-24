@@ -60,14 +60,14 @@ export default {
       text-align: center;
       .time {
         font-size: 36rpx;
-        // font-weight: bold;
+        font-weight: bold;
         color: #334bc9;
       }
       .subtext {
         margin-top: 16rpx;
         font-size: 28rpx;
         .report {
-          color: #4f70d4;
+        color: #334bc9;
         }
       }
     }

@@ -97,6 +97,7 @@ export default {
       font-weight: 400;
       color: rgba(255, 255, 255, 0.7);
       &.active {
+        font-weight: bold;
         color: white;
       }
     }

@@ -286,6 +286,7 @@ export default {
     justify-content: center;
     align-items: center;
     .knowledge {
+      font-weight: bold;
       margin-top: 16rpx;
       line-height: 60rpx;
       font-size: 28rpx;

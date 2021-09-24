@@ -141,7 +141,7 @@ export default {
       if (this.isNoInfo) {
         color = "#FF8788";
       } else if (this.isExpired || this.hasOneDifferent) {
-        color = "#fdf9de";
+        color = "#FFDF77";
       }
       return color;
     },

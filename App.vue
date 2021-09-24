@@ -64,6 +64,9 @@ div {
     background: linear-gradient(180deg, #c3c3c3 0%, #999999 100%);
     color: white !important;
   }
+  &:after {
+    border: none;
+  }
 }
 
 .btn1 {
@@ -79,6 +82,9 @@ div {
   align-items: center;
   &:active {
     background-color: #2f53d4;
+  }
+  &:after {
+    border: none;
   }
 }
 .btn-primary {
@@ -138,22 +144,22 @@ div {
     background-position-x: -20%;
   }
 }
-  .no-data {
-    padding: 64rpx 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    .icon {
-      transform: translateX(5%);
-      width: 384rpx;
-    }
-    .desc {
-      width: 368rpx;
-      font-size: 28rpx;
-      line-height: 40rpx;
-      margin-top: 32rpx;
-      text-align: center;
-    }
+.no-data {
+  padding: 64rpx 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  .icon {
+    transform: translateX(5%);
+    width: 384rpx;
   }
+  .desc {
+    width: 368rpx;
+    font-size: 28rpx;
+    line-height: 40rpx;
+    margin-top: 32rpx;
+    text-align: center;
+  }
+}
 </style>

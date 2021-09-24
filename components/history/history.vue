@@ -1,7 +1,7 @@
 <template>
   <div class="history">
     <div class="top" ref="top">
-      <div class="title">历史记录</div>
+      <div class="title">历史报告</div>
       <div class="right" v-if="isLogin">
         <my-radio v-model="collected"></my-radio>
       </div>

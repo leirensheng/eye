@@ -27,7 +27,7 @@ Vue.prototype.$sleep = (time = 500) => {
     setTimeout(resolve, time);
   });
 };
-Vue.prototype.$formatTime = (val) => {
+Vue.prototype.$formatTime = (val, noSecond) => {
   if (!val) return "";
   let date = val;
   if (typeof val !== "object") {
@@ -45,7 +45,8 @@ Vue.prototype.$formatTime = (val) => {
   minute = getFullNumber(minute);
   second = getFullNumber(second);
 
-  return `${year}-${month}-${day} ${hour}:${minute}:${second}`;
+  let str = `${year}-${month}-${day} ${hour}:${minute}`;
+  return noSecond ? str : str + `:${second}`;
 };
 
 Vue.prototype.$toLogin = () => {
@@ -60,18 +61,17 @@ Vue.prototype.$getPrePath = () => {
   return prePage && prePage.route;
 };
 
-
-Vue.prototype.$getClip=()=>{
+Vue.prototype.$getClip = () => {
   return new Promise((resolve) => {
     uni.getClipboardData({
       success: (res) => {
-        resolve(res.data)
+        resolve(res.data);
       },
     });
   });
-}
+};
 
-Vue.prototype.$isUrl = (val)=> val.indexOf("http") !== -1
+Vue.prototype.$isUrl = (val) => val.indexOf("http") !== -1;
 App.mpType = "app";
 
 const app = new Vue({

@@ -34,7 +34,7 @@
         <my-form v-model="form" @isOk="handleIsOk"></my-form>
       </div>
       <button :disabled="isDisabled" class="btn" @click="generateBtnClick">
-        生成合规性报告
+        {{ btnName }}
       </button>
     </div>
     <div class="bottom">
@@ -59,14 +59,14 @@ export default {
   onUnload() {
     uni.$off("analyse");
     uni.$off("loginStatus", this.setLoginStatus);
-    this.setClipData('');
+    this.setClipData("");
   },
   onLoad() {
     uni.$on("loginStatus", this.setLoginStatus);
     uni.$on("analyse", this.start);
   },
   async created() {
-    if(this.$store.state.noStartWhenCreated) return
+    if (this.$store.state.noStartWhenCreated) return;
     // 从介绍页面进来后,读取
     let clipData = await this.$getClip();
     this.setClipData(clipData);
@@ -80,7 +80,8 @@ export default {
       result: "",
       value: "",
       form: {},
-      isFormOk:false,
+      hasGenerate: false,
+      isFormOk: false,
       isLogin: false,
       loading: false,
       placeholder:
@@ -89,13 +90,22 @@ export default {
   },
   mounted() {},
   computed: {
+    btnName() {
+      return this.hasGenerate ? "报告已生成" : "生成合规性报告";
+    },
     isNotComplete() {
       if (!this.result) return false;
       let arr = ["certificateNo", "model", "power", "producer"];
       return arr.some((key) => [undefined, ""].includes(this.result[key]));
     },
     isDisabled() {
-      return this.value.length === 0 || !this.isPlaformMatch || this.loading|| !this.isFormOk;
+      return (
+        this.value.length === 0 ||
+        !this.isPlaformMatch ||
+        this.loading ||
+        !this.isFormOk ||
+        this.hasGenerate
+      );
     },
     isPlaformMatch() {
       return ["TB", "TM", "JD", "PDD"].includes((this.result || {}).platform);
@@ -111,13 +121,13 @@ export default {
     },
   },
   methods: {
-    handleIsOk(val){
-      this.isFormOk = val
+    handleIsOk(val) {
+      this.isFormOk = val;
     },
     setLoginStatus(val) {
       this.isLogin = val;
     },
-    ...mapMutations(["setClipData", "setNeedRefreshLeft","setSubscribe"]),
+    ...mapMutations(["setClipData", "setNeedRefreshLeft", "setSubscribe"]),
 
     async start() {
       this.loading = true;
@@ -167,16 +177,18 @@ export default {
       this.toReport(weChatNotify);
     },
     toReport(isSubscribeOk) {
-      this.setSubscribe(isSubscribeOk)
+      this.hasGenerate = true;
+      this.setSubscribe(isSubscribeOk);
       uni.switchTab({
         url: "/pages/user/index",
       });
     },
     clear() {
+      this.hasGenerate = false;
       this.value = "";
       this.form = {};
       this.result = "";
-      this.setClipData('');
+      this.setClipData("");
     },
     async generateBtnClick() {
       if (!this.isLogin) {

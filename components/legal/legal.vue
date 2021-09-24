@@ -27,7 +27,9 @@
         :subTitle="seWenSubTitle"
         :isSuccess="data.colourTemperature"
       ></my-card>
-      <div class="knowledge" @click="toKnowledge('colourTemperature')">知识点></div>
+      <div class="knowledge" @click="toKnowledge('colourTemperature')">
+        知识点>
+      </div>
     </div>
 
     <div class="hight-title guang">光通量</div>
@@ -46,7 +48,7 @@
 export default {
   data() {
     return {
-      hasOneDifferent:false,
+      hasOneDifferent: false,
     };
   },
   props: {
@@ -57,9 +59,8 @@ export default {
   },
   created() {},
   computed: {
-    isExpired(){
-      return new Date()> new Date(this.data.effectiveDate)
-
+    isExpired() {
+      return new Date() > new Date(this.data.effectiveDate);
     },
     config() {
       return [
@@ -79,7 +80,7 @@ export default {
           id: "effectiveDate",
           name: "证书有效期",
           lightName: this.isExpired,
-          type:'date'
+          type: "date",
         },
         {
           id: "executeStander",
@@ -136,51 +137,51 @@ export default {
       );
     },
     borderColor() {
-    let color='#B7EB8F'
-      if(this.isExpired||this.hasOneDifferent){
-        color="#fdf9de"
-      }else if(this.isNoInfo){
-        color="#FF8788"
+      let color = "#B7EB8F";
+      if (this.isNoInfo) {
+        color = "#FF8788";
+      } else if (this.isExpired || this.hasOneDifferent) {
+        color = "#fdf9de";
       }
       return color;
     },
     backgroundColor() {
-       let color='#eeffd8'
-      if(this.isExpired||this.hasOneDifferent){
-        color="#FFF9DC"
-      }else if(this.isNoInfo){
-        color="#f8dfdf"
+      let color = "#eeffd8";
+      if (this.isNoInfo) {
+        color = "#f8dfdf";
+      } else if (this.isExpired || this.hasOneDifferent) {
+        color = "#FFF9DC";
       }
-      return color
+      return color;
     },
     src() {
-      let type='success'
-      if(this.isExpired||this.hasOneDifferent){
-        type="info"
-      }else if(this.isNoInfo){
-        type="danger"
+      let type = "success";
+      if (this.isNoInfo) {
+        type = "danger";
+      } else if (this.isExpired || this.hasOneDifferent) {
+        type = "info";
       }
       return `/static/${type}.svg`;
     },
-    isNoInfo(){
-      return !this.data.productName
+    isNoInfo() {
+      return !this.data.productName;
     },
     statusName() {
-      if(this.isExpired){
-        return "请注意产品生产日期应在证书有效截止日期前，否则，合规性有疑问，请谨慎购买"
-      }else if(this.hasOneDifferent){
-        return "该产品信息与CCC证书不一致，合规性有疑问，请谨慎购买"
-      }else if(this.isNoInfo){
-        return "未查询到该产品的CCC证书，合规性有疑问，请谨慎购买"
+      if (this.isNoInfo) {
+        return "未查询到该产品的CCC证书，合规性有疑问，请谨慎购买";
+      } else if (this.isExpired) {
+        return "请注意产品生产日期应在证书有效截止日期前，否则，合规性有疑问，请谨慎购买";
+      } else if (this.hasOneDifferent) {
+        return "该产品信息与CCC证书不一致，合规性有疑问，请谨慎购买";
       }
-      return "该产品信息与CCC证书信息一致，合规性良好"
+      return "该产品信息与CCC证书信息一致，合规性良好";
     },
   },
   mounted() {},
   methods: {
-   toKnowledge(page){
-     this.$toPage(page)
-   },
+    toKnowledge(page) {
+      this.$toPage(page);
+    },
     checkIsLost(webInfo) {
       return ["", undefined].includes(webInfo);
     },
@@ -197,8 +198,8 @@ export default {
       let isLost = this.checkIsLost(valToCompare);
       let isDifferent = this.checkIsDifferent(val, valToCompare);
 
-      if(isDifferent){
-        this.hasOneDifferent = true
+      if (isDifferent) {
+        this.hasOneDifferent = true;
       }
       let valStr = `<div>${val}</div>`;
       let tipsStr = isLost

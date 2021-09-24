@@ -1,14 +1,22 @@
 <template>
   <div class="certificate">
     <div class="hight-title">健康照明产品质量等级认证证书</div>
-    <div class="wrap">
-      <image  v-if="src" mode="widthFix" class="pic" :src="src"></image>
-      <key-value :data="data" :config="config" 
-      rowPadding="16rpx"
-      class="content"
-      noDataShowDash
-      :valueFontWeight="800"
-      :valueWidth="470"></key-value>
+
+    <div class="no-data" v-if="!data.certificateNo">
+      <image class="icon" mode="widthFix" src="/static/no-data.svg"></image>
+      <div class="desc">暂无数据</div>
+    </div>
+    <div v-else class="wrap">
+      <image mode="widthFix" class="pic" :src="src"></image>
+      <key-value
+        :data="data"
+        :config="config"
+        rowPadding="16rpx"
+        class="content"
+        noDataShowDash
+        :valueFontWeight="800"
+        :valueWidth="470"
+      ></key-value>
     </div>
   </div>
 </template>
@@ -87,14 +95,14 @@ export default {
   },
   computed: {
     src() {
-      if(!this.data.grade) return ''
+      if (!this.data.grade) return "";
       return `/static/level${this.data.grade.length}.png`;
     },
   },
-  props:{
-    data:{
-      type:Object,
-      default:()=>({})
+  props: {
+    data: {
+      type: Object,
+      default: () => ({}),
     },
   },
   created() {},
@@ -129,11 +137,10 @@ export default {
     width: 210rpx;
     margin-bottom: 48rpx;
   }
-  .content{
+  .content {
     width: 100%;
   }
 }
 </style>
 <style lang="scss">
-
 </style>

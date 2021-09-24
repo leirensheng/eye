@@ -62,36 +62,5 @@ export default {
 
 <style lang="scss" scoped>
 .cloud-chart {
-  .no-data {
-    padding: 64rpx 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    .icon {
-      transform: translateX(5%);
-      width: 384rpx;
-    }
-    .desc {
-      width: 368rpx;
-      font-size: 28rpx;
-      line-height: 40rpx;
-      margin-top: 32rpx;
-      text-align: center;
-    }
-  }
-}
-.box {
-  padding: 30rpx;
-  .title {
-    font-size: 32rpx;
-    font-weight: bold;
-  }
-  .charts-box {
-    position: relative;
-    width: 100%;
-    z-index: -1;
-    // height: 624rpx;
-  }
 }
 </style>

@@ -260,7 +260,7 @@ export default {
   }
   .content {
     padding: 48rpx 24rpx;
-    min-height: calc(100vh - 98rpx);
+    min-height: calc(100vh - 180rpx);
   }
   .bottom {
     padding: 14rpx 24rpx 0 24rpx;

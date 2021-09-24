@@ -160,8 +160,8 @@ export default {
     checkIfShowPic() {
       let isSubscribeOk = this.$store.state.isSubscribeOk;
       if (typeof isSubscribeOk === "boolean") {
-        this.isShowAgree = this.isSubscribeOk;
-        this.isShowReject = !this.isSubscribeOk;
+        this.isShowAgree = isSubscribeOk;
+        this.isShowReject = !isSubscribeOk;
         this.setSubscribe(undefined);
         this.collected = 0;
       }

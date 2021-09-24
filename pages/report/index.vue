@@ -8,7 +8,7 @@
       <div class="right">
         <div class="title">{{ data.productName }}</div>
         <div class="subtitle">
-          <div class="date">{{ $formatTime(data.createDate,true) }}</div>
+          <div class="date">{{ $formatTime(data.createDate, true) }}</div>
           <div v-if="platformName">商品来源：{{ platformName }}</div>
         </div>
       </div>
@@ -260,7 +260,8 @@ export default {
   }
   .content {
     padding: 48rpx 24rpx;
-    min-height: calc(100vh - 180rpx);
+    min-height: calc(100vh - 98rpx - 100rpx - constant(safe-area-inset-bottom));
+    min-height: calc(100vh - 98rpx - 100rpx - env(safe-area-inset-bottom));
   }
   .bottom {
     padding: 14rpx 24rpx 0 24rpx;

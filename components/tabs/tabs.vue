@@ -139,11 +139,10 @@ export default {
     touchMove(e) {
       e.preventDefault();
       this.hasTransition = false;
-      let target;
       if (typeof e.touches !== "undefined" && e.touches.length === 1) {
-        target = e.touches[0];
-        let offset = target.clientX - touchX;
-        let offsetY = target.clientY - touchY;
+        let {clientX,clientY} = e.touches[0];
+        let offset = clientX - touchX;
+        let offsetY = clientY - touchY;
 
         if (!touchDirection) {
           this.getDirection(offset, offsetY);

@@ -87,9 +87,8 @@ export default {
   .tabs {
     display: flex;
     align-items: center;
-    padding: 0 24rpx;
     // height: 98rpx;
-    justify-content: space-between;
+    justify-content: space-evenly;
     font-size: 28rpx;
     background: linear-gradient(180deg, #0060ff 0%, #004dcd 100%);
     .tab {

@@ -6,9 +6,7 @@ export default {
     console.log("App Launch");
   },
   async onShow() {
-    console.log('app Show')
     setTimeout(async () => {
-      console.log('定时')
       if (!this.$store.state.isAppShowRead) {
         return;
       }
@@ -17,14 +15,12 @@ export default {
       this.setClipData(clipData);
       if (this.$isUrl(clipData) && isDifferent) {
         if (clipData)
-      console.log('app跳转')
-
           uni.switchTab({
             url: "/pages/search/index",
           });
         uni.$emit("analyse");
       }
-    }, 100);
+    }, 200);
   },
   methods: {
     ...mapMutations(["setClipData"]),

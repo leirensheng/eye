@@ -75,24 +75,20 @@ export default {
   data() {
     return {
       current: 0,
-      isReady:false
+      isReady: false,
     };
   },
   computed: {},
   onLoad({ isFromUser }) {
-    console.log('load')
     if (!isFromUser && uni.getStorageSync("hasShowTips")) {
-      console.log('页面跳转')
       uni.switchTab({
         url: "/pages/search/index",
       });
       return;
     }
-    this.isReady = true
-    uni.setStorageSync("hasShowTips", true);
     this.setAppShowRead(false);
-    uni.$emit('can')
-    console.log('设置不处理')
+    this.isReady = true;
+    uni.setStorageSync("hasShowTips", true);
   },
   onUnload() {
     this.setAppShowRead(true);

@@ -144,6 +144,7 @@ export default {
     },
     async analyseUrl() {
       if (!this.value) return;
+      this.hasGenerate = false
       this.result = null;
       this.loading = true;
       uni.showLoading({

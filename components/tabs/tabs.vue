@@ -1,7 +1,7 @@
 <template>
   <div class="tabs">
     <div class="sticky">
-      <my-tab :tabs="tabList" :value="value" @input="changeTab"></my-tab>
+      <my-tab :tabs="tabList" :percentage="percentage" :value="value" @input="changeTab"></my-tab>
     </div>
     <div
       class="tab-pane-view"
@@ -120,7 +120,6 @@ export default {
     },
 
     changeTab(val) {
-      console.log(val);
       this.$emit("input", val);
     },
 

@@ -2,8 +2,9 @@
   <div class="my-tab">
     <div
       class="scroll"
+      :class="percentage ? null : 'transition'"
       :style="{
-        transform: `translateX(${leftArr[value]}px)`,
+        transform: `translateX(${translateX}px)`,
         width: `${widthArr[value]}px`,
       }"
     >
@@ -37,6 +38,10 @@ export default {
       type: Number,
       default: 0,
     },
+    percentage: {
+      type: Number,
+      default: 0,
+    },
     tabs: {
       type: Array,
       default: () => [],
@@ -48,6 +53,13 @@ export default {
       handler() {
         this.getDomData();
       },
+    },
+  },
+  computed: {
+    translateX() {
+      return (
+        this.leftArr[this.value] - this.percentage * this.widthArr[this.value]
+      );
     },
   },
   created() {},
@@ -69,7 +81,9 @@ export default {
 .my-tab {
   position: relative;
   .scroll {
-    transition: all 0.3s cubic-bezier(0.7, 0.51, 0.02, 1.1);
+    &.transition {
+      transition: all 0.3s cubic-bezier(0.7, 0.51, 0.02, 1.1);
+    }
     position: absolute;
     left: 0;
     top: 0;

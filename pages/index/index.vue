@@ -1,5 +1,5 @@
 <template>
-  <div class="introduce">
+  <div class="introduce" v-if="isReady">
     <swiper
       class="swiper"
       :current="current"
@@ -75,6 +75,7 @@ export default {
   data() {
     return {
       current: 0,
+      isReady:false
     };
   },
   computed: {},
@@ -85,6 +86,7 @@ export default {
       });
       return;
     }
+    this.isReady = true
     uni.setStorageSync("hasShowTips", true);
     this.setAppShowRead(false);
   },

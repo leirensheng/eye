@@ -13,9 +13,7 @@
         </div>
       </div>
     </div>
-    <div class="sticky">
-      <my-tab :tabs="tabs" v-model="tab"></my-tab>
-    </div>
+
     <Tabs :tabList="tabs" v-model="tab" :contentHeightArr="contentHeightArr">
       <TabPane>
         <div class="content">
@@ -166,6 +164,8 @@ export default {
   },
   onUnload() {
     uni.$off("loginStatus", this.backFromLogin);
+    uni.$off("fixedTop");
+
     let isChange = this.isCollected !== this.data.collected;
     if (isChange) {
       this.setNeedRefreshCollect(true);
@@ -180,6 +180,7 @@ export default {
     isFromUser = this.$getPrePath() === "pages/user/index";
     this.setAppShowRead(false);
     uni.$on("loginStatus", this.backFromLogin);
+    uni.$on('fixedTop',(val)=> this.fixedTop = val)
     this.id = id;
     uni.showLoading({
       title: "加载中",
@@ -199,8 +200,7 @@ export default {
       this.contentHeightArr = result.map((one) => one.height);
     },
     async getFixedTop() {
-      let result = await this.$getDomsInfo(".sticky");
-      this.fixedTop = result[0].top;
+      uni.$emit('getFixedTop')
     },
     backFromLogin(val) {
       if (val) {

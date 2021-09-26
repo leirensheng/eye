@@ -1,5 +1,8 @@
 <template>
   <div class="tabs">
+    <div class="sticky">
+      <my-tab :tabs="tabList" :value="value" @input="changeTab"></my-tab>
+    </div>
     <div
       class="tab-pane-view"
       @touchstart="touchstart"
@@ -68,8 +71,17 @@ export default {
     const systemInfo = uni.getSystemInfoSync();
     windowWidth = systemInfo.windowWidth;
   },
-  mounted() {},
+  mounted() {
+    uni.$on('getFixedTop', this.getFixedTop)
+  },
+  beforeDestroy(){
+    uni.$off('getFixedTop')
+  },
   methods: {
+    async getFixedTop() {
+      let result = await this.$getDomsInfo(".sticky");
+      uni.$emit("fixedTop", result[0].top);
+    },
     touchstart(e) {
       if (e.touches.length === 1) {
         touchX = e.touches[0].clientX;
@@ -80,8 +92,7 @@ export default {
     },
     touchend(e) {
       touchDirection = undefined;
-      if(!this.percentage) return
-
+      if (!this.percentage) return;
 
       let isDistanceOk =
         Math.abs(this.percentage) > 0.5 && Math.abs(this.percentage) <= 1;
@@ -100,17 +111,17 @@ export default {
         direction = 0;
       }
       console.log("end", this.percentage);
-      console.log("translate", this.translateX);
 
       this.hasTransition = true;
       this.percentage = 0;
-      this.changeTab(direction);
+      this.changeTab(this.value - direction);
 
       e.preventDefault();
     },
 
     changeTab(val) {
-      this.$emit("input", this.value - val);
+      console.log(val);
+      this.$emit("input", val);
     },
 
     isSwipeTo(direction, percentage) {

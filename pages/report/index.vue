@@ -16,13 +16,28 @@
     <div class="sticky">
       <my-tab :tabs="tabs" v-model="tab"></my-tab>
     </div>
-    <div class="content">
-      <legal v-show="tab === 0" :data="legalData"></legal>
-      <!-- 词云需要v-if -->
-      <quality v-if="tab === 1" :data="qualityData"></quality>
-      <consume v-show="tab === 2"></consume>
-      <certificate v-show="tab === 3" :data="certificateData"></certificate>
-    </div>
+    <Tabs :tabList="tabs" v-model="tab" :contentHeightArr="contentHeightArr">
+      <TabPane>
+        <div class="content">
+          <legal :data="legalData"></legal>
+        </div>
+      </TabPane>
+      <TabPane>
+        <div class="content">
+          <quality :data="qualityData"></quality>
+        </div>
+      </TabPane>
+      <TabPane>
+        <div class="content">
+          <consume></consume>
+        </div>
+      </TabPane>
+      <TabPane>
+        <div class="content">
+          <certificate :data="certificateData"></certificate>
+        </div>
+      </TabPane>
+    </Tabs>
 
     <div class="bottom" v-if="isOwner">
       <div class="left" @click="remove">
@@ -44,10 +59,24 @@
 <script>
 import { deleteReport, collect, noCollect, getDetail } from "@/api/eye.js";
 import { mapMutations } from "vuex";
+import Tabs from "../../components/tabs/tabs.vue";
+import TabPane from "../../components/tabs/tabPane.vue";
+
 let isFromUser = true;
+
 export default {
+  components: {
+    Tabs,
+    TabPane,
+  },
+  onPageScroll(e) {
+    this.scrollTop = e.scrollTop;
+  },
   data() {
     return {
+      contentHeightArr: null,
+      fixedTop: 100,
+      scrollTop: 0,
       data: {},
       isCollected: false,
       tab: 0,
@@ -70,6 +99,9 @@ export default {
   },
 
   computed: {
+    isFixedTop() {
+      return this.scrollTop >= this.fixedTop;
+    },
     legalData() {
       return this.data.compliance || {};
     },
@@ -113,7 +145,18 @@ export default {
   },
   created() {},
   mounted() {},
-
+  watch: {
+    tab() {
+      if (this.isFixedTop) {
+        setTimeout(() => {
+          uni.pageScrollTo({
+          duration: 500, // 毫秒
+          scrollTop: this.fixedTop, // 位置
+        });
+        }, 200);
+      }
+    },
+  },
   onUnload() {
     uni.$off("loginStatus", this.backFromLogin);
     let isChange = this.isCollected !== this.data.collected;
@@ -144,6 +187,14 @@ export default {
     }
   },
   methods: {
+    async getContentHeight() {
+      let result = await this.$getDomsInfo(".report .content");
+      this.contentHeightArr = result.map((one) => one.height);
+    },
+    async getFixedTop() {
+      let result = await this.$getDomsInfo(".sticky");
+      this.fixedTop = result[0].top;
+    },
     backFromLogin(val) {
       if (val) {
         this.getDetail();
@@ -164,6 +215,11 @@ export default {
       this.data = await getDetail(this.id);
       this.isCollected = this.data.collected;
       this.isOwner = this.data.openId === openId;
+
+      setTimeout(() => {
+        this.getContentHeight();
+        this.getFixedTop();
+      }, 500);
       uni.hideLoading();
     },
     async remove() {

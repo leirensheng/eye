@@ -74,6 +74,21 @@ Vue.prototype.$getClip = () => {
 Vue.prototype.$isUrl = (val) => val.indexOf("http") !== -1;
 App.mpType = "app";
 
+Vue.prototype.$getDomsInfo = function (selector) {
+  return new Promise((resolve) => {
+    uni
+      .createSelectorQuery()
+      .in(this)
+      .selectAll(selector)
+      .boundingClientRect((result) => {
+        if (result) {
+          resolve(result);
+        }
+      })
+      .exec();
+  });
+};
+
 const app = new Vue({
   ...App,
 });

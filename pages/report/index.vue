@@ -32,7 +32,7 @@
           <consume></consume>
         </div>
       </TabPane>
-      <TabPane>
+      <TabPane v-if="hasCertificate">
         <div class="content">
           <certificate :data="certificateData"></certificate>
         </div>
@@ -81,7 +81,13 @@ export default {
       isCollected: false,
       tab: 0,
       isOwner: false,
-      tabs: [
+
+    };
+  },
+
+  computed: {
+    tabs(){
+      let arr = [
         {
           name: "合规性评价",
         },
@@ -94,16 +100,17 @@ export default {
         {
           name: "认证证书",
         },
-      ],
-    };
-  },
-
-  computed: {
+      ]
+      return this.hasCertificate? arr: arr.slice(0,-1)
+    },
     isFixedTop() {
       return this.scrollTop >= this.fixedTop;
     },
     legalData() {
       return this.data.compliance || {};
+    },
+    hasCertificate(){
+      return !!this.certificateData.certificateNo
     },
     certificateData() {
       let obj = this.data.certificate || {};

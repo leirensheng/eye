@@ -2,7 +2,10 @@
   <div class="my-tab">
     <div
       class="scroll"
-      :style="{ transform: `translateX(${leftArr[value]}px)`, width: `${widthArr[value]}px` }"
+      :style="{
+        transform: `translateX(${leftArr[value]}px)`,
+        width: `${widthArr[value]}px`,
+      }"
     >
       <div class="white"></div>
     </div>
@@ -39,23 +42,24 @@ export default {
       default: () => [],
     },
   },
-  created() {},
-  mounted() {
-    this.getDomData();
+  watch: {
+    "tabs.length": {
+      immediate: true,
+      handler() {
+        this.getDomData();
+      },
+    },
   },
+  created() {},
+  mounted() {},
   methods: {
     change(index) {
       this.$emit("input", index);
     },
-    getDomData() {
-      const query = uni.createSelectorQuery().in(this);
-      query
-        .selectAll(".tabs .tab")
-        .boundingClientRect((rect) => {
-          this.leftArr = rect.map((one) => one.left);
-          this.widthArr = rect.map((one) => one.width);
-        })
-        .exec();
+    async getDomData() {
+      let res = await this.$getDomsInfo(".tabs .tab");
+      this.leftArr = res.map((one) => one.left);
+      this.widthArr = res.map((one) => one.width);
     },
   },
 };
@@ -65,7 +69,7 @@ export default {
 .my-tab {
   position: relative;
   .scroll {
-    transition: all 0.3s  cubic-bezier(0.7, 0.51, 0.02, 1.1);
+    transition: all 0.3s cubic-bezier(0.7, 0.51, 0.02, 1.1);
     position: absolute;
     left: 0;
     top: 0;
@@ -87,11 +91,7 @@ export default {
     // height: 98rpx;
     justify-content: space-between;
     font-size: 28rpx;
-    background: linear-gradient(
-      180deg,
-      #0060ff 0%,
-      #004dcd 100%
-    );
+    background: linear-gradient(180deg, #0060ff 0%, #004dcd 100%);
     .tab {
       line-height: 98rpx;
       font-weight: 400;

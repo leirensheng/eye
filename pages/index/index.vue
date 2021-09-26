@@ -78,8 +78,14 @@ export default {
     };
   },
   computed: {},
-  onLoad() {
-    uni.setStorageSync('hasShowTips',true)
+  onLoad({ isFromUser }) {
+    if (!isFromUser && uni.getStorageSync("hasShowTips")) {
+      uni.switchTab({
+        url: "/pages/search/index",
+      });
+      return;
+    }
+    uni.setStorageSync("hasShowTips", true);
     this.setAppShowRead(false);
   },
   onUnload() {

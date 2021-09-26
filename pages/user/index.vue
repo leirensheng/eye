@@ -72,7 +72,7 @@ export default {
     toHome() {
       this.setNoStartWhenCreated()
       uni.reLaunch({
-        url: "/pages/index/index",
+        url: "/pages/index/index?isFromUser=1",
       });
     },
   },

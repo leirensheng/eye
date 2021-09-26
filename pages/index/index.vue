@@ -65,7 +65,7 @@
         ></div>
       </div>
     </div>
-    <div class="right-btn" @click="open">跳过</div>
+    <div class="right-btn" @click="open" v-if="current !== 3">跳过</div>
   </div>
 </template>
 

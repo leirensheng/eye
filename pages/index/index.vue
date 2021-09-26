@@ -79,6 +79,7 @@ export default {
   },
   computed: {},
   onLoad() {
+    uni.setStorageSync('hasShowTips',true)
     this.setAppShowRead(false);
   },
   onUnload() {

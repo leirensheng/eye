@@ -4,6 +4,11 @@ import { mapMutations } from "vuex";
 export default {
   onLaunch: function () {
     console.log("App Launch");
+    if (uni.getStorageSync("hasShowTips")) {
+      uni.switchTab({
+        url: "/pages/search/index",
+      });
+    }
   },
   async onShow() {
     setTimeout(async () => {

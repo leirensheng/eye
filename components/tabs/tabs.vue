@@ -72,16 +72,10 @@ export default {
     windowWidth = systemInfo.windowWidth;
   },
   mounted() {
-    uni.$on('getFixedTop', this.getFixedTop)
   },
   beforeDestroy(){
-    uni.$off('getFixedTop')
   },
   methods: {
-    async getFixedTop() {
-      let result = await this.$getDomsInfo(".sticky");
-      uni.$emit("fixedTop", result[0].top);
-    },
     touchstart(e) {
       if (e.touches.length === 1) {
         touchX = e.touches[0].clientX;

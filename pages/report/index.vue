@@ -163,7 +163,6 @@ export default {
   },
   onUnload() {
     uni.$off("loginStatus", this.backFromLogin);
-    uni.$off("fixedTop");
 
     let isChange = this.isCollected !== this.data.collected;
     if (isChange) {
@@ -179,7 +178,6 @@ export default {
     isFromUser = this.$getPrePath() === "pages/user/index";
     this.setAppShowRead(false);
     uni.$on("loginStatus", this.backFromLogin);
-    uni.$on("fixedTop", (val) => (this.fixedTop = val));
     this.id = id;
     uni.showLoading({
       title: "加载中",
@@ -199,7 +197,8 @@ export default {
       this.contentHeightArr = result.map((one) => one.height);
     },
     async getFixedTop() {
-      uni.$emit("getFixedTop");
+      let res= await this.$getDomsInfo('.report .main')
+      this.fixedTop = res[0].height
     },
     backFromLogin(val) {
       if (val) {
@@ -225,7 +224,7 @@ export default {
       setTimeout(() => {
         this.getContentHeight();
         this.getFixedTop();
-      }, 500);
+      }, 0);
       uni.hideLoading();
     },
     async remove() {

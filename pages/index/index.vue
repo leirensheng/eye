@@ -213,8 +213,11 @@ export default {
   .bottom {
     position: absolute;
     width: 70%;
-    bottom: calc(constant(safe-area-inset-bottom) + 128rpx);
-    bottom: calc(env(safe-area-inset-bottom) + 128rpx);
+    bottom: 128rpx;
+    @supports (padding-bottom: env(safe-area-inset-bottom)) or (padding-bottom: constant(safe-area-inset-bottom)){
+      bottom: calc(constant(safe-area-inset-bottom) + 128rpx);
+      bottom: calc(env(safe-area-inset-bottom) + 128rpx);
+    }
     left: 50%;
     transform: translateX(-50%);
     display: flex;

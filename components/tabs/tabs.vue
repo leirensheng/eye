@@ -1,7 +1,13 @@
 <template>
   <div class="tabs">
     <div class="sticky">
-      <my-tab :tabs="tabList" :percentage="percentage" :value="value" @input="changeTab"></my-tab>
+      <my-tab
+        :tabs="tabList"
+        :hasTransition="hasTransition"
+        :percentage="percentage"
+        :value="value"
+        @input="changeTab"
+      ></my-tab>
     </div>
     <div
       class="tab-pane-view"
@@ -71,10 +77,8 @@ export default {
     const systemInfo = uni.getSystemInfoSync();
     windowWidth = systemInfo.windowWidth;
   },
-  mounted() {
-  },
-  beforeDestroy(){
-  },
+  mounted() {},
+  beforeDestroy() {},
   methods: {
     touchstart(e) {
       if (e.touches.length === 1) {
@@ -92,7 +96,7 @@ export default {
         Math.abs(this.percentage) > 0.5 && Math.abs(this.percentage) <= 1;
 
       let isSpeedOk =
-        Math.abs(this.percentage) > 0.2 && Date.now() - startTime <= 200;
+        Math.abs(this.percentage) > 0.1 && Date.now() - startTime <= 200;
       let direction;
 
       if (isDistanceOk || isSpeedOk) {
@@ -105,10 +109,12 @@ export default {
         direction = 0;
       }
       console.log("end", this.percentage);
-
       this.hasTransition = true;
-      this.percentage = 0;
-      this.changeTab(this.value - direction);
+
+      setTimeout(() => {
+        this.percentage = 0;
+        this.changeTab(this.value - direction);
+      }, 0);
 
       e.preventDefault();
     },
@@ -134,7 +140,7 @@ export default {
       e.preventDefault();
       this.hasTransition = false;
       if (typeof e.touches !== "undefined" && e.touches.length === 1) {
-        let {clientX,clientY} = e.touches[0];
+        let { clientX, clientY } = e.touches[0];
         let offset = clientX - touchX;
         let offsetY = clientY - touchY;
 

@@ -2,7 +2,7 @@
   <div class="my-tab">
     <div
       class="scroll"
-      :class="percentage ? null : 'transition'"
+      :class="hasTransition ? 'transition' : null"
       :style="{
         transform: `translateX(${translateX}px)`,
         width: `${widthArr[value]}px`,
@@ -34,6 +34,10 @@ export default {
   },
 
   props: {
+    hasTransition: {
+      type: Boolean,
+      default: true,
+    },
     value: {
       type: Number,
       default: 0,

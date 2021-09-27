@@ -18,7 +18,7 @@
 
       <button
         class="btn1"
-        :disabled="!isReady||!isAgree"
+        :disabled="!isReady||!isAgree||hasClick"
         @click="login"
       >
         <image
@@ -46,6 +46,7 @@ import { getCode, newGetUserInfo, oldGetUserInfo } from "./login.js";
 export default {
   data() {
     return {
+      hasClick:false,
       hasGetUser: false,
       isAgree: true,
       code: "",
@@ -99,6 +100,7 @@ export default {
     getUser() {},
     // 授权
     async login() {
+      this.hasClick = true
       // this.loading = true;
       try {
         let userinfoRes = await this.getUserInfo();
@@ -114,6 +116,7 @@ export default {
       } catch (e) {
         uni.$emit('loginStatus',false)
         uni.clearStorageSync();
+        this.hasClick = false
         console.log(e);
       }
       // this.loading = false;
@@ -130,6 +133,7 @@ export default {
       this.isAgree = !this.isAgree;
     },
     back() {
+      this.hasClick = false
       uni.navigateBack();
     },
   },

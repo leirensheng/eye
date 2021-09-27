@@ -33,7 +33,7 @@ let touchDirection;
 export default {
   data() {
     return {
-      hasTransition: false,
+      hasTransition: true,
       percentage: 0,
     };
   },

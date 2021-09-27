@@ -56,9 +56,13 @@ export default {
     },
   },
   computed: {
+    gap() {
+      return this.leftArr[1] - this.leftArr[0] - this.widthArr[0];
+    },
     translateX() {
       return (
-        this.leftArr[this.value] - this.percentage * this.widthArr[this.value]
+        this.leftArr[this.value] -
+        this.percentage * (this.widthArr[this.value] + this.gap)
       );
     },
   },
@@ -102,7 +106,7 @@ export default {
     display: flex;
     align-items: center;
     // height: 98rpx;
-    justify-content: space-evenly;
+    justify-content: space-around;
     font-size: 28rpx;
     background: linear-gradient(180deg, #0060ff 0%, #004dcd 100%);
     .tab {

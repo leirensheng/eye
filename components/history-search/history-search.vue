@@ -35,7 +35,7 @@ export default {
   beforeDestroy() {},
   computed: {
     dataForRender() {
-      let length = this.data.length || 5;
+      let length =  8;
       if (this.isShowFrame) {
         return Array.from({ length }, () => ({}));
       }

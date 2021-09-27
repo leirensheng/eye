@@ -79,12 +79,11 @@ export default {
       isCollected: false,
       tab: 0,
       isOwner: false,
-
     };
   },
 
   computed: {
-    tabs(){
+    tabs() {
       let arr = [
         {
           name: "合规性评价",
@@ -98,8 +97,8 @@ export default {
         {
           name: "认证证书",
         },
-      ]
-      return this.hasCertificate? arr: arr.slice(0,-1)
+      ];
+      return this.hasCertificate ? arr : arr.slice(0, -1);
     },
     isFixedTop() {
       return this.scrollTop >= this.fixedTop;
@@ -107,8 +106,8 @@ export default {
     legalData() {
       return this.data.compliance || {};
     },
-    hasCertificate(){
-      return !!this.certificateData.certificateNo
+    hasCertificate() {
+      return !!this.certificateData.certificateNo;
     },
     certificateData() {
       let obj = this.data.certificate || {};
@@ -155,9 +154,9 @@ export default {
       if (this.isFixedTop) {
         setTimeout(() => {
           uni.pageScrollTo({
-          duration: 500, // 毫秒
-          scrollTop: this.fixedTop, // 位置
-        });
+            duration: 500, // 毫秒
+            scrollTop: this.fixedTop, // 位置
+          });
         }, 200);
       }
     },
@@ -180,7 +179,7 @@ export default {
     isFromUser = this.$getPrePath() === "pages/user/index";
     this.setAppShowRead(false);
     uni.$on("loginStatus", this.backFromLogin);
-    uni.$on('fixedTop',(val)=> this.fixedTop = val)
+    uni.$on("fixedTop", (val) => (this.fixedTop = val));
     this.id = id;
     uni.showLoading({
       title: "加载中",
@@ -200,7 +199,7 @@ export default {
       this.contentHeightArr = result.map((one) => one.height);
     },
     async getFixedTop() {
-      uni.$emit('getFixedTop')
+      uni.$emit("getFixedTop");
     },
     backFromLogin(val) {
       if (val) {

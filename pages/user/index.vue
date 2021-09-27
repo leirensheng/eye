@@ -10,7 +10,13 @@
     </div>
     <div class="bottom">
       <div class="history-wrap">
-        <history :isShow="isShow" :isLogin="isLogin"></history>
+        <history
+          :isShow="isShow"
+          :isLogin="isLogin"
+          :pageHeight="pageHeight"
+          :isFixedTop="isFixedTop"
+          :fixedTop="fixedTop"
+        ></history>
       </div>
       <div class="tips">
         <span>如何生成报告？</span>
@@ -30,15 +36,24 @@ export default {
       user: null,
       isLogin: false,
       user: "",
+      fixedTop: 1,
+      scrollTop: 0,
+      pageHeight: 0,
     };
   },
   computed: {
+    isFixedTop() {
+      return this.scrollTop >= this.fixedTop;
+    },
     src() {
       return this.isLogin ? this.user.avatar : "/static/no-user.svg";
     },
     username() {
       return this.isLogin ? this.user.nickName : "登录/注册";
     },
+  },
+  onPageScroll(e) {
+    this.scrollTop = e.scrollTop;
   },
   onPullDownRefresh() {
     uni.$emit("pullDown");
@@ -50,6 +65,7 @@ export default {
     uni.$on("stopPullDown", () => {
       uni.stopPullDownRefresh();
     });
+    this.getFixedTop();
   },
   onUnLoad() {
     uni.$off("stopPullDown");
@@ -63,14 +79,24 @@ export default {
     this.user = uni.getStorageSync("user");
   },
   methods: {
-    ...mapMutations(['setNoStartWhenCreated']),
+    // 子元素调用
+    async getPageHeight() {
+      let res = await this.$getDomsInfo(".user-page");
+      console.log(res);
+      return res[0].height;
+    },
+    ...mapMutations(["setNoStartWhenCreated"]),
+    async getFixedTop() {
+      let res = await this.$getDomsInfo(".user-page .top");
+      this.fixedTop = res[0].height;
+    },
     clickName() {
       if (!this.isLogin) {
         this.$toLogin();
       }
     },
     toHome() {
-      this.setNoStartWhenCreated()
+      this.setNoStartWhenCreated();
       uni.reLaunch({
         url: "/pages/index/index?isFromUser=1",
       });

@@ -1,6 +1,6 @@
 <template>
   <div class="history">
-    <div class="top" ref="top">
+    <div class="top">
       <div class="title">历史报告</div>
       <div class="right" v-if="isLogin">
         <my-radio v-model="collected"></my-radio>
@@ -226,7 +226,7 @@ export default {
 
   .top {
     border-bottom: 1rpx solid rgb(224, 224, 224);
-    padding: 28rpx 24rpx;
+    padding: 0 24rpx;
     margin: 0 -24rpx;
     position: sticky;
     top: 0;
@@ -239,7 +239,7 @@ export default {
       font-weight: 400;
       font-size: 32rpx;
       color: black;
-      line-height: 44rpx;
+      line-height: 100rpx;
     }
   }
   .content {

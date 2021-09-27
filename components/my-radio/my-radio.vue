@@ -51,6 +51,7 @@ export default {
   display: flex;
   align-items: center;
   .item {
+    height: 100rpx;
     display: flex;
     justify-content: center;
     align-items: center;

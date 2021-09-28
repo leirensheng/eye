@@ -104,6 +104,7 @@ export default {
         {
           id: "power",
           name: "功率",
+          isShow: (val) => !!val,
         },
       ];
     },

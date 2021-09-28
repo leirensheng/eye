@@ -79,6 +79,7 @@ export default {
       isCollected: false,
       tab: 0,
       isOwner: false,
+      loading: false,
     };
   },
 
@@ -150,6 +151,15 @@ export default {
   created() {},
   mounted() {},
   watch: {
+    loading(val) {
+      if (val) {
+        uni.showLoading({
+          title: "加载中",
+        });
+      } else {
+        uni.hideLoading();
+      }
+    },
     tab() {
       if (this.isFixedTop) {
         setTimeout(() => {
@@ -179,13 +189,10 @@ export default {
     this.setAppShowRead(false);
     uni.$on("loginStatus", this.backFromLogin);
     this.id = id;
-    uni.showLoading({
-      title: "加载中",
-    });
+    this.loading = true;
     let isLogin = await this.$checkLogin();
-    uni.hideLoading();
     if (!isLogin) {
-      uni.hideLoading();
+      this.loading = false;
       this.$toLogin();
     } else {
       await this.getDetail();
@@ -218,9 +225,7 @@ export default {
     async getDetail() {
       let openId = uni.getStorageSync("openId");
       if (!openId) return;
-      uni.showLoading({
-        title: "加载中",
-      });
+      this.loading = true;
       this.data = await getDetail(this.id);
       this.isCollected = this.data.collected;
       this.isOwner = this.data.openId === openId;
@@ -229,7 +234,7 @@ export default {
         this.getContentHeight();
         this.getFixedTop();
       }, 0);
-      uni.hideLoading();
+      this.loading = false;
     },
     async remove() {
       uni.showModal({

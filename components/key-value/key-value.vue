@@ -3,7 +3,7 @@
     <div
       class="row"
       :class="hasBorder && 'has-border'"
-      v-for="(item, index) in config"
+      v-for="(item, index) in showConfig"
       :key="index"
       :style="{ paddingTop: rowPadding, paddingBottom: rowPadding }"
     >
@@ -34,6 +34,7 @@ export default {
   data() {
     return {
       isReady: false,
+      configHandled: [],
     };
   },
   props: {
@@ -67,7 +68,7 @@ export default {
     },
   },
   created() {
-    this.config.forEach((one) => {
+    this.configHandled = this.config.map((one) => {
       let noText = this.noDataShowDash
         ? "-"
         : '<span class="no">未查询到</span>';
@@ -75,16 +76,32 @@ export default {
       if (one.type === "date" || one.name.indexOf("日期") !== -1) {
         defaultFormatter = (val) => (val ? this.$formatDate(val) : noText);
       }
-      let formatter = this.$parent.config.find(
-        (_) => _.id === one.id
-      ).formatter;
+      let parentConfig = this.$parent.config.find((_) => _.id === one.id);
+      let formatter = parentConfig.formatter;
 
-      one.formatter = formatter || defaultFormatter;
+      return {
+        ...one,
+        formatter: formatter || defaultFormatter,
+        isShow: parentConfig.isShow || this.alwayShow,
+      };
     });
     this.isReady = true;
   },
+  computed: {
+    showConfig() {
+      if (!this.isReady) return [];
+      return this.configHandled.filter((one) => {
+        let val = this.data[one.id];
+        return one.isShow(val);
+      });
+    },
+  },
   mounted() {},
-  methods: {},
+  methods: {
+    alwayShow() {
+      return true;
+    },
+  },
 };
 </script>
 

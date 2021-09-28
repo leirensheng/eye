@@ -3,7 +3,6 @@
     <image class="pic" mode="widthFix" src="/static/logo.png"></image>
     <div class="title">慧眼识物</div>
 
-
     <div class="bottom">
       <!-- <div class="agree">
         <radio
@@ -18,7 +17,7 @@
 
       <button
         class="btn1"
-        :disabled="!isReady||!isAgree||hasClick"
+        :disabled="!isReady || !isAgree || hasClick"
         @click="login"
       >
         <image
@@ -40,13 +39,13 @@
 </template>
 
 <script>
-import { saveUserInfo,  saveCode } from "@/api/login.js";
+import { saveUserInfo, saveCode } from "@/api/login.js";
 import { getCode, newGetUserInfo, oldGetUserInfo } from "./login.js";
 
 export default {
   data() {
     return {
-      hasClick:false,
+      hasClick: false,
       hasGetUser: false,
       isAgree: true,
       code: "",
@@ -100,7 +99,7 @@ export default {
     getUser() {},
     // 授权
     async login() {
-      this.hasClick = true
+      this.hasClick = true;
       // this.loading = true;
       try {
         let userinfoRes = await this.getUserInfo();
@@ -111,15 +110,20 @@ export default {
         console.log("用户信息缓存成功");
         this.hasGetUser = true;
         uni.setStorageSync("jsCode", this.code);
-        uni.$emit('loginStatus',true)
+        uni.$emit("loginStatus", true);
         uni.navigateBack();
       } catch (e) {
-        uni.$emit('loginStatus',false)
-        uni.clearStorageSync();
-        this.hasClick = false
+        uni.$emit("loginStatus", false);
+        this.clearStorage();
+        this.hasClick = false;
         console.log(e);
       }
       // this.loading = false;
+    },
+    clearStorage() {
+      uni.removeStorage("user");
+      uni.removeStorage("openId");
+      uni.removeStorage("jsCode");
     },
 
     // 服务协议
@@ -133,7 +137,7 @@ export default {
       this.isAgree = !this.isAgree;
     },
     back() {
-      this.hasClick = false
+      this.hasClick = false;
       uni.navigateBack();
     },
   },

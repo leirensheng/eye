@@ -81,9 +81,10 @@ export default {
   computed: {},
   onLoad() {
     let isFromUser = uni.getStorageSync("isFromUser");
+    let hasShowTips =uni.getStorageSync("hasShowTips")
 
     uni.removeStorageSync("isFromUser");
-    if (!isFromUser && uni.getStorageSync("hasShowTips")) {
+    if (!isFromUser && hasShowTips) {
       uni.switchTab({
         url: "/pages/search/index",
       });

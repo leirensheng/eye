@@ -96,7 +96,7 @@ export default {
         Math.abs(this.percentage) > 0.5 && Math.abs(this.percentage) <= 1;
 
       let isSpeedOk =
-        Math.abs(this.percentage) > 0.1 && Date.now() - startTime <= 200;
+        Math.abs(this.percentage) > 0.1 && Date.now() - startTime <= 100;
       let direction;
 
       if (isDistanceOk || isSpeedOk) {

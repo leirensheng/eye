@@ -58,7 +58,7 @@ export default {
           formatter: (val) => this.formatAddr(val, "manufacturerAddress"),
         },
         {
-          id: "manufacturerAddress",
+          id: "producer",
           name: "生产商名称及地址",
           formatter: (val) => this.formatAddr(val, "producerAddress"),
         },
@@ -67,7 +67,7 @@ export default {
           name: "产品名称",
         },
         {
-          id: "xinghao",
+          id: "model",
           name: "产品规格、型号（系列）",
         },
         {
@@ -85,6 +85,7 @@ export default {
         {
           id: "effectiveDate",
           name: "有效期",
+          type:'date'
         },
         {
           id: "changeDate",

@@ -1,9 +1,11 @@
 <template>
   <div class="key-value" v-if="isReady">
-    <div class="row" :class="hasBorder&&'has-border'" v-for="(item, index) in config" :key="index"
-    
-     :style="{paddingTop:rowPadding,paddingBottom: rowPadding}"
-     
+    <div
+      class="row"
+      :class="hasBorder && 'has-border'"
+      v-for="(item, index) in config"
+      :key="index"
+      :style="{ paddingTop: rowPadding, paddingBottom: rowPadding }"
     >
       <div
         class="name"
@@ -35,25 +37,25 @@ export default {
     };
   },
   props: {
-    valueFontWeight:{
-          type: Number,
+    valueFontWeight: {
+      type: Number,
       default: 500,
     },
-    noDataShowDash:{
-       type:Boolean,
+    noDataShowDash: {
+      type: Boolean,
       default: false,
     },
-    hasBorder:{
-      type:Boolean,
+    hasBorder: {
+      type: Boolean,
       default: false,
     },
     valueWidth: {
       type: Number,
       default: 350,
     },
-     rowPadding: {
+    rowPadding: {
       type: String,
-      default: '32rpx',
+      default: "32rpx",
     },
     config: {
       type: Array,
@@ -66,10 +68,12 @@ export default {
   },
   created() {
     this.config.forEach((one) => {
-      let noText = this.noDataShowDash?'-': '<span class="no">未查询到</span>';
+      let noText = this.noDataShowDash
+        ? "-"
+        : '<span class="no">未查询到</span>';
       let defaultFormatter = (val) => val || noText;
       if (one.type === "date" || one.name.indexOf("日期") !== -1) {
-        defaultFormatter = (val) => this.$formatDate(val) || noText;
+        defaultFormatter = (val) => (val ? this.$formatDate(val) : noText);
       }
       let formatter = this.$parent.config.find(
         (_) => _.id === one.id

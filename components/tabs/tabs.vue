@@ -108,7 +108,6 @@ export default {
       } else {
         direction = 0;
       }
-      console.log("end", this.percentage);
       this.hasTransition = true;
 
       setTimeout(() => {

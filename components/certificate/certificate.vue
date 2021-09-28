@@ -1,12 +1,7 @@
 <template>
   <div class="certificate">
     <div class="hight-title">健康照明产品质量等级认证证书</div>
-
-    <div class="no-data" v-if="!data.certificateNo">
-      <image class="icon" mode="widthFix" src="/static/no-data.svg"></image>
-      <div class="desc">暂无数据</div>
-    </div>
-    <div v-else class="wrap">
+    <div class="wrap">
       <image mode="widthFix" class="pic" :src="src"></image>
       <key-value
         :data="data"
@@ -137,6 +132,7 @@ export default {
     margin: 0 auto;
     width: 210rpx;
     margin-bottom: 48rpx;
+    height: 286rpx;
   }
   .content {
     width: 100%;

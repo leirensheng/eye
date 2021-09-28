@@ -90,6 +90,7 @@ export default {
     },
     touchend(e) {
       touchDirection = undefined;
+      this.hasTransition = true;
       if (!this.percentage) return;
 
       let isDistanceOk =

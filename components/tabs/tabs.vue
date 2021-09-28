@@ -133,7 +133,7 @@ export default {
     },
     getDirection(offsetX, offsetY) {
       touchDirection =
-        Math.abs(offsetY) > Math.abs(offsetX) ? "vertical" : "horizontal";
+        1.1 * Math.abs(offsetY) < Math.abs(offsetX) ? "horizontal" : "vertical";
     },
     touchMove(e) {
       e.preventDefault();

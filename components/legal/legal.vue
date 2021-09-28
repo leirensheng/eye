@@ -229,6 +229,7 @@ export default {
     .icon {
       margin-top: 5rpx;
       width: 42rpx;
+      height: 42rpx;
       flex-shrink: 0;
       margin-right: 16rpx;
     }

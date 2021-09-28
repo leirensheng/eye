@@ -153,6 +153,7 @@ div {
   .icon {
     transform: translateX(5%);
     width: 384rpx;
+    height: 150rpx;
   }
   .desc {
     width: 368rpx;

@@ -193,11 +193,16 @@ export default {
   },
   methods: {
     async getContentHeight() {
-      this.contentHeightArr = await this.$getDomsInfo(".report .content", false, 'height');
+      let arr = await this.$getDomsInfo(".report .content", false, "height");
+      let { product, category } = this.qualityData;
+      if (product.length > 3 || category.length > 3) {
+        arr[1] = "auto";
+      }
+      this.contentHeightArr = arr;
     },
     async getFixedTop() {
-      let res= await this.$getDomsInfo('.report .main')
-      this.fixedTop = res[0].height
+      let res = await this.$getDomsInfo(".report .main");
+      this.fixedTop = res[0].height;
     },
     backFromLogin(val) {
       if (val) {

@@ -44,17 +44,18 @@ export default {
   },
   data() {
     return {
-      isNoMoreUnqualified: false,
       unqualifiedMoreTimes: 0,
     };
   },
   computed: {
+    curEnd(){
+      return this.unqualifiedMoreTimes * 15 + 3
+    },
+    isNoMoreUnqualified(){
+      return this.curEnd >= this.allUnqualifiedItems.length
+    },
     showUnqualifiedItems() {
-      let end = this.unqualifiedMoreTimes * 15 + 3;
-      if (end >= this.allUnqualifiedItems.length) {
-        this.isNoMoreUnqualified = true;
-      }
-      return this.allUnqualifiedItems.slice(0, end);
+      return this.allUnqualifiedItems.slice(0, this.curEnd);
     },
   },
   created() {},

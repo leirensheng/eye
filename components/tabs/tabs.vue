@@ -49,7 +49,9 @@ export default {
     },
     curTabHeight() {
       if (this.contentHeightArr) {
-        return this.contentHeightArr[this.value] + "px";
+        let val = this.contentHeightArr[this.value];
+        let isNumber = typeof val === "number";
+        return isNumber ? val + "px" : "auto";
       }
       return "auto";
     },

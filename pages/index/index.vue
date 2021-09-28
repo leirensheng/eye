@@ -130,6 +130,7 @@ export default {
     }
     .first {
       .icon {
+        height: 160rpx;
         width: 160rpx;
       }
       .text {

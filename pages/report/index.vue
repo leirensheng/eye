@@ -193,8 +193,7 @@ export default {
   },
   methods: {
     async getContentHeight() {
-      let result = await this.$getDomsInfo(".report .content");
-      this.contentHeightArr = result.map((one) => one.height);
+      this.contentHeightArr = await this.$getDomsInfo(".report .content", false, 'height');
     },
     async getFixedTop() {
       let res= await this.$getDomsInfo('.report .main')

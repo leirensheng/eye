@@ -141,7 +141,7 @@ export default {
       // 加载完成后有可能撑开不了
       if (scrollTop) {
         setTimeout(async () => {
-          let pageHeight = await this.$parent.getPageHeight();
+          let pageHeight = await this.$getDomInfo('.user-page',true,'height')
           const windowHeight = uni.getSystemInfoSync().windowHeight;
           if (pageHeight < windowHeight + scrollTop) {
             uni.pageScrollTo({

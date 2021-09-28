@@ -79,16 +79,13 @@ export default {
     this.user = uni.getStorageSync("user");
   },
   methods: {
-    // 子元素调用
-    async getPageHeight() {
-      let res = await this.$getDomsInfo(".user-page");
-      console.log(res);
-      return res[0].height;
-    },
     ...mapMutations(["setNoStartWhenCreated"]),
     async getFixedTop() {
-      let res = await this.$getDomsInfo(".user-page .top");
-      this.fixedTop = res[0].height;
+      this.fixedTop = await this.$getDomInfo(
+        ".user-page .top",
+        false,
+        "height"
+      );
     },
     clickName() {
       if (!this.isLogin) {

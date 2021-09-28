@@ -74,15 +74,35 @@ Vue.prototype.$getClip = () => {
 Vue.prototype.$isUrl = (val) => val.indexOf("http") !== -1;
 App.mpType = "app";
 
-Vue.prototype.$getDomsInfo = function (selector) {
+Vue.prototype.$getDomsInfo = function (selector, noLimit, property) {
   return new Promise((resolve) => {
-    uni
-      .createSelectorQuery()
-      .in(this)
+    let query = uni.createSelectorQuery();
+    if (!noLimit) {
+      query = query.in(this);
+    }
+    query
       .selectAll(selector)
       .boundingClientRect((result) => {
         if (result) {
-          resolve(result);
+          resolve(property ? result.map((one) => one[property]) : result);
+        }
+      })
+      .exec();
+  });
+};
+
+
+Vue.prototype.$getDomInfo = function (selector, noLimit, property) {
+  return new Promise((resolve) => {
+    let query = uni.createSelectorQuery();
+    if (!noLimit) {
+      query = query.in(this);
+    }
+    query
+      .select(selector)
+      .boundingClientRect((result) => {
+        if (result) {
+          resolve(property ? result[property] : result);
         }
       })
       .exec();

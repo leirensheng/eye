@@ -27,7 +27,7 @@
       <div class="not-support" v-if="notSupport">
         该商品链接不适用于本工具合规性报告查询
       </div>
-      <div class="no-info" v-if="isNotComplete && result">
+      <div class="no-info" v-if="isShowForm">
         <div class="no-info-message">
           此链接未收集到必要信息，请您向客服或厂商索要证书编号、制造商或生产厂名称、产品规格型号、功率参数信息
         </div>
@@ -98,12 +98,18 @@ export default {
       let arr = ["certificateNo", "model", "power", "producer"];
       return arr.some((key) => [undefined, ""].includes(this.result[key]));
     },
+    isShowForm() {
+      return this.result && this.isNotComplete && this.isNoCertificate;
+    },
+    isNoCertificate() {
+      return this.result && !this.result.certificateNo;
+    },
     isDisabled() {
       return (
         this.value.length === 0 ||
         !this.isPlaformMatch ||
         this.loading ||
-        !this.isFormOk ||
+        (this.isShowForm && !this.isFormOk) ||
         this.hasGenerate
       );
     },
@@ -144,7 +150,7 @@ export default {
     },
     async analyseUrl() {
       if (!this.value) return;
-      this.hasGenerate = false
+      this.hasGenerate = false;
       this.result = null;
       this.loading = true;
       uni.showLoading({
@@ -187,6 +193,7 @@ export default {
     clear() {
       this.hasGenerate = false;
       this.value = "";
+      this.isFormOk = false;
       this.form = {};
       this.result = "";
       this.setClipData("");

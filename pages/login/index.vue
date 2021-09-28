@@ -121,9 +121,9 @@ export default {
       // this.loading = false;
     },
     clearStorage() {
-      uni.removeStorage("user");
-      uni.removeStorage("openId");
-      uni.removeStorage("jsCode");
+      uni.removeStorageSync("user");
+      uni.removeStorageSync("openId");
+      uni.removeStorageSync("jsCode");
     },
 
     // 服务协议

@@ -1,9 +1,9 @@
 import { checkLoginStatus } from "@/api/login.js";
 
 function clearStorage(){
-  uni.removeStorage('user')
-  uni.removeStorage('openId')
-  uni.removeStorage('jsCode')
+  uni.removeStorageSync('user')
+  uni.removeStorageSync('openId')
+  uni.removeStorageSync('jsCode')
 }
 
 export default async ()=>{

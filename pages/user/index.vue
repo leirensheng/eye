@@ -94,8 +94,9 @@ export default {
     },
     toHome() {
       this.setNoStartWhenCreated();
+      uni.setStorageSync("isFromUser", true);
       uni.reLaunch({
-        url: "/pages/index/index?isFromUser=1",
+        url: "/pages/index/index",
       });
     },
   },

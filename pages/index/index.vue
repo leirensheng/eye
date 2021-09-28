@@ -79,7 +79,10 @@ export default {
     };
   },
   computed: {},
-  onLoad({ isFromUser }) {
+  onLoad() {
+    let isFromUser = uni.getStorageSync("isFromUser");
+
+    uni.removeStorageSync("isFromUser");
     if (!isFromUser && uni.getStorageSync("hasShowTips")) {
       uni.switchTab({
         url: "/pages/search/index",
@@ -215,7 +218,8 @@ export default {
     position: absolute;
     width: 70%;
     bottom: 128rpx;
-    @supports (padding-bottom: env(safe-area-inset-bottom)) or (padding-bottom: constant(safe-area-inset-bottom)){
+    @supports (padding-bottom: env(safe-area-inset-bottom)) or
+      (padding-bottom: constant(safe-area-inset-bottom)) {
       bottom: calc(constant(safe-area-inset-bottom) + 128rpx);
       bottom: calc(env(safe-area-inset-bottom) + 128rpx);
     }

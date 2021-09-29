@@ -208,8 +208,7 @@ export default {
       this.contentHeightArr = arr;
     },
     async getFixedTop() {
-      let res = await this.$getDomsInfo(".report .main");
-      this.fixedTop = res[0].height;
+      this.fixedTop = await this.$getDomsInfo(".report .main", false, 'height');
     },
     backFromLogin(val) {
       if (val) {
@@ -236,7 +235,7 @@ export default {
       }, 0);
       this.loading = false;
     },
-    async remove() {
+    remove() {
       uni.showModal({
         title: "确定要删除此报告吗?",
         content: " ",

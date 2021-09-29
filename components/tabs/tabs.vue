@@ -112,7 +112,7 @@ export default {
         direction = 0;
       }
       this.hasTransition = true;
-
+      // 为了my-tab在不同宽度tab切换时,width 也能做transition,不至于突然左右移动
       setTimeout(() => {
         this.percentage = 0;
         this.changeTab(this.value - direction);

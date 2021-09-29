@@ -127,15 +127,15 @@ export default {
     },
 
     // 服务协议
-    gotoServiceAgreement() {
-      uni.navigateTo({
-        url: "/pages/serviceAgreement/index",
-      });
-    },
+    // gotoServiceAgreement() {
+    //   uni.navigateTo({
+    //     url: "/pages/serviceAgreement/index",
+    //   });
+    // },
     // 点击同意单选框
-    clickAgreeRadio() {
-      this.isAgree = !this.isAgree;
-    },
+    // clickAgreeRadio() {
+    //   this.isAgree = !this.isAgree;
+    // },
     back() {
       this.hasClick = false;
       uni.navigateBack();

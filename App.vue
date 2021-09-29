@@ -14,10 +14,9 @@ export default {
       let isDifferent = this.$store.state.clipData !== clipData;
       this.setClipData(clipData);
       if (this.$isUrl(clipData) && isDifferent) {
-        if (clipData)
-          uni.switchTab({
-            url: "/pages/search/index",
-          });
+        uni.switchTab({
+          url: "/pages/search/index",
+        });
         uni.$emit("analyse");
       }
     }, 200);

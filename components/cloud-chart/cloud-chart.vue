@@ -1,15 +1,14 @@
 <template>
   <view class="cloud-chart">
     <div class="hight-title">评论质量关键词词云</div>
+    <div class="types">
+      <scroll-tab :tabs="tabs" v-model="curTab"></scroll-tab>
+    </div>
     <div class="no-data" v-if="showData.length === 0">
       <image class="icon" mode="widthFix" src="/static/no-data.svg"></image>
       <div class="desc">暂无数据</div>
     </div>
     <div v-else>
-      <div class="types">
-
-      <scroll-tab  :tabs="tabs" v-model="curTab"></scroll-tab>
-      </div>
       <qiun-data-charts
         canvas2d
         class="charts-box"
@@ -92,10 +91,10 @@ export default {
 
 <style lang="scss" scoped>
 .cloud-chart {
-  .types{
+  .types {
     margin-top: 32rpx;
-    display:flex;
-    justify-content:center;
+    display: flex;
+    justify-content: center;
   }
 }
 </style>

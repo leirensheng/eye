@@ -169,10 +169,12 @@ export default {
     async refresh(isKeepPosition) {
       let scrollTop = isKeepPosition && this.isFixedTop ? this.fixedTop + 2 : 0;
       //  有骨架屏的时候一定能撑满
-      uni.pageScrollTo({
-        duration: 0, // 毫秒
-        scrollTop, // 位置
-      });
+      if(scrollTop){
+        uni.pageScrollTo({
+          duration: 0, // 毫秒
+          scrollTop, // 位置
+        });
+      }
 
       this.isShowFrame = true;
       this.scrollId = "";
@@ -183,19 +185,22 @@ export default {
       this.loading = false;
       this.isShowFrame = false;
 
-      // 加载完成后有可能撑开不了
-      if (scrollTop) {
-        setTimeout(async () => {
-          let pageHeight = await this.$getDomInfo(".user-page", true, "height");
-          const windowHeight = uni.getSystemInfoSync().windowHeight;
-          if (pageHeight < windowHeight + scrollTop) {
-            uni.pageScrollTo({
-              duration: 250,
-              scrollTop: 0,
-            });
-          }
-        }, 0);
-      }
+      // uni.pageScrollTo({
+      //         duration: 0,
+      //         scrollTop: 0,
+      //       });
+      // if (scrollTop) {
+      //   setTimeout(async () => {
+      //     let pageHeight = await this.$getDomInfo(".user-page", true, "height");
+      //     const windowHeight = uni.getSystemInfoSync().windowHeight;
+      //     if (pageHeight < windowHeight + scrollTop) {
+      //       uni.pageScrollTo({
+      //         duration: 250,
+      //         scrollTop: 0,
+      //       });
+      //     }
+      //   }, 0);
+      // }
     },
 
     minDelay(fn, minTime) {

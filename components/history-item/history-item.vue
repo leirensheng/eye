@@ -93,6 +93,7 @@ export default {
     .left {
       background: $grey;
       height: 84rpx;
+      border-radius: 8px;
     }
     .right {
       .name {
@@ -121,7 +122,7 @@ export default {
     }
   }
   .left {
-    height: auto;
+    height: 84rpx;
     margin-top: 6rpx;
     flex-shrink: 0;
     width: 84rpx;

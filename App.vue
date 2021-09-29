@@ -162,4 +162,21 @@ div {
     text-align: center;
   }
 }
+.title-bg {
+  position: relative;
+  display: inline-block;
+  left: 50%;
+  transform: translate(-50%);
+  &::before {
+    z-index: -1;
+    position: absolute;
+    bottom: 0;
+    left: -24rpx;
+    right: -24rpx;
+    top: 50%;
+    content: "";
+    display: block;
+    background: #d9e7ff;
+  }
+}
 </style>

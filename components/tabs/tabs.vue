@@ -11,9 +11,6 @@
     </div>
     <div
       class="tab-pane-view"
-      @touchstart="touchstart"
-      @touchmove="touchMove"
-      @touchend="touchend"
     >
       <div
         class="tab-pane-group"

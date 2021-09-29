@@ -121,7 +121,8 @@ export default {
       return {
         product: this.data.producerQuantity || [],
         category: this.data.categoryQuantity || [],
-        keyword: this.data.keywords,
+        negative: this.data.negative,
+        positive: this.data.positive,
       };
     },
     collectSrc() {
@@ -164,7 +165,7 @@ export default {
       if (this.isFixedTop) {
         setTimeout(() => {
           uni.pageScrollTo({
-            duration: 500, // 毫秒
+            duration: 0, // 毫秒
             scrollTop: this.fixedTop, // 位置
           });
         }, 200);
@@ -208,7 +209,7 @@ export default {
       this.contentHeightArr = arr;
     },
     async getFixedTop() {
-      this.fixedTop = await this.$getDomsInfo(".report .main", false, 'height');
+      this.fixedTop = await this.$getDomsInfo(".report .main", false, "height");
     },
     backFromLogin(val) {
       if (val) {
@@ -232,7 +233,7 @@ export default {
       setTimeout(() => {
         this.getContentHeight();
         this.getFixedTop();
-      }, 0);
+      }, 200);
       this.loading = false;
     },
     remove() {

@@ -6,7 +6,7 @@
       <div class="name">{{ statusName }}</div>
     </div>
     <div class="form-wrap">
-      <div class="form-name">产品参数信息</div>
+      <div class="form-name title-bg">产品参数信息</div>
       <div class="form">
         <key-value
           :data="data"
@@ -243,26 +243,7 @@ export default {
   .form-wrap {
     position: relative;
     .form-name {
-      position: absolute;
-      left: 50%;
-      transform: translate(-50%);
-      text-align: center;
-      position: relative;
-      display: inline-block;
-      // margin: 0 auto;
-      margin: 48rpx 0 36rpx 0;
-
-      &::before {
-        z-index: -1;
-        position: absolute;
-        bottom: 0;
-        left: -10rpx;
-        right: -10rpx;
-        top: 50%;
-        content: "";
-        display: block;
-        background: #d9e7ff;
-      }
+      margin: 48rpx auto 36rpx auto;
     }
 
     .has-empty {

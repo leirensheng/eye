@@ -32,6 +32,7 @@
 <script>
 import { getHistory } from "@/api/eye.js";
 import { mapState, mapMutations } from "vuex";
+let timer;
 export default {
   data() {
     return {
@@ -70,6 +71,15 @@ export default {
     noReportName() {
       return this.collected ? "暂无收藏报告" : "暂无历史报告";
     },
+
+    needWaitAndRefresh() {
+      return (
+        !this.collected && this.firstPageData.some((one) => one.genStatus === 0)
+      );
+    },
+    firstPageData() {
+      return this.history.slice(0, 10);
+    },
     params() {
       return {
         collected: this.collected,
@@ -78,6 +88,13 @@ export default {
     },
   },
   watch: {
+    needWaitAndRefresh(val) {
+      if (val) {
+        this.startWait();
+      } else {
+        this.stopWait();
+      }
+    },
     isReachBottom() {
       this.isReachBottom = false;
       if (this.noMore || this.loading) return;
@@ -121,6 +138,34 @@ export default {
       "setNeedRefreshLeft",
       "setSubscribe",
     ]),
+    startWait() {
+      timer = setTimeout(async () => {
+        console.log("检查一次");
+        let data = await getHistory({ ...this.params, scrollId: "" });
+        if (timer) {
+          let isWaitContinue = this.checkAndRefresh(data);
+          if (isWaitContinue) {
+            this.startWait();
+          }
+        }
+      }, 1000);
+    },
+    checkAndRefresh(data) {
+      let total = 0;
+      this.firstPageData.forEach((one, index) => {
+        let newVal = data[index].genStatus;
+        let isChange = one.genStatus !== newVal;
+        if (isChange) {
+          one.genStatus = newVal;
+        }
+        total += newVal;
+      });
+      return total !== this.firstPageData.length;
+    },
+    stopWait() {
+      clearTimeout(timer);
+      timer = null;
+    },
     async refresh(isKeepPosition) {
       let scrollTop = isKeepPosition && this.isFixedTop ? this.fixedTop + 2 : 0;
       //  有骨架屏的时候一定能撑满
@@ -141,12 +186,12 @@ export default {
       // 加载完成后有可能撑开不了
       if (scrollTop) {
         setTimeout(async () => {
-          let pageHeight = await this.$getDomInfo('.user-page',true,'height')
+          let pageHeight = await this.$getDomInfo(".user-page", true, "height");
           const windowHeight = uni.getSystemInfoSync().windowHeight;
           if (pageHeight < windowHeight + scrollTop) {
             uni.pageScrollTo({
-              duration: 250, 
-              scrollTop: 0, 
+              duration: 250,
+              scrollTop: 0,
             });
           }
         }, 0);

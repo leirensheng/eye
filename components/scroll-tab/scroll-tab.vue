@@ -70,7 +70,6 @@ export default {
       let tabsLeft = await this.$getDomInfo(".scroll-tab .tabs", false, "left");
       this.leftArr = res.map((one) => one.left - tabsLeft);
 
-      console.log(this.leftArr);
       this.widthArr = res.map((one) => one.width);
     },
   },

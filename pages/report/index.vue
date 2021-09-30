@@ -1,42 +1,8 @@
 <template>
   <div class="report" :class="isOwner ? 'has-fixed' : 'no-fixed'">
-    <div class="main">
-      <div class="left">
-        <div>合规性</div>
-        <div>报告</div>
-      </div>
-      <div class="right">
-        <div class="title">{{ data.productName }}</div>
-        <div class="subtitle">
-          <div class="date">{{ $formatTime(data.createDate, true) }}</div>
-          <div v-if="platformName">商品来源：{{ platformName }}</div>
-        </div>
-      </div>
+    <div class="fixed-tab" :class="isFixedTop ? 'show' : null">
+      <my-tab :tabs="tabs" v-model="tab"></my-tab>
     </div>
-
-    <Tabs :tabList="tabs" v-model="tab" :contentHeightArr="contentHeightArr">
-      <TabPane>
-        <div class="content">
-          <legal :data="legalData"></legal>
-        </div>
-      </TabPane>
-      <TabPane>
-        <div class="content">
-          <quality :data="qualityData"></quality>
-        </div>
-      </TabPane>
-      <TabPane>
-        <div class="content">
-          <consume></consume>
-        </div>
-      </TabPane>
-      <TabPane v-if="hasCertificate">
-        <div class="content">
-          <certificate :data="certificateData"></certificate>
-        </div>
-      </TabPane>
-    </Tabs>
-
     <div class="bottom" v-if="isOwner">
       <div class="left" @click="remove">
         <image class="icon" mode="widthFix" src="/static/delete.svg"></image>
@@ -51,6 +17,35 @@
         <div>转发</div>
       </button>
     </div>
+    <scroll-view
+      class="scroll-Y"
+      :scroll-top="scrollTop"
+      scroll-y="true"
+      @scroll="scroll"
+    >
+      <div class="main">
+        <div class="left">
+          <div>合规性</div>
+          <div>报告</div>
+        </div>
+        <div class="right">
+          <div class="title">{{ data.productName }}</div>
+          <div class="subtitle">
+            <div class="date">{{ $formatTime(data.createDate, true) }}</div>
+            <div v-if="platformName">商品来源：{{ platformName }}</div>
+          </div>
+        </div>
+      </div>
+
+      <my-tab :tabs="tabs" v-model="tab" class="my-tab"></my-tab>
+
+      <div class="content">
+        <legal v-if="tab === 0" :data="legalData"></legal>
+        <quality v-if="tab === 1" :data="qualityData"></quality>
+        <consume v-if="tab === 2"></consume>
+        <certificate v-if="tab === 3" :data="certificateData"></certificate>
+      </div>
+    </scroll-view>
   </div>
 </template>
 
@@ -72,6 +67,8 @@ export default {
   },
   data() {
     return {
+      scrollTop: 0,
+      oldScrollTop: 0,
       contentHeightArr: null,
       fixedTop: 100,
       scrollTop: 0,
@@ -102,7 +99,7 @@ export default {
       return this.hasCertificate ? arr : arr.slice(0, -1);
     },
     isFixedTop() {
-      return this.scrollTop >= this.fixedTop;
+      return this.oldScrollTop >= this.fixedTop;
     },
     legalData() {
       return this.data.compliance || {};
@@ -163,12 +160,10 @@ export default {
     },
     tab() {
       if (this.isFixedTop) {
-        setTimeout(() => {
-          uni.pageScrollTo({
-            duration: 0, // 毫秒
-            scrollTop: this.fixedTop, // 位置
-          });
-        }, 200);
+        this.scrollTop = this.oldScrollTop;
+        this.$nextTick(() => {
+          this.scrollTop = this.fixedTop;
+        });
       }
     },
   },
@@ -200,16 +195,11 @@ export default {
     }
   },
   methods: {
-    async getContentHeight() {
-      let arr = await this.$getDomsInfo(".report .content", false, "height");
-      let { product, category } = this.qualityData;
-      if (product.length > 3 || category.length > 3) {
-        arr[1] = "auto";
-      }
-      this.contentHeightArr = arr;
+    scroll(e) {
+      this.oldScrollTop = e.detail.scrollTop;
     },
     async getFixedTop() {
-      this.fixedTop = await this.$getDomsInfo(".report .main", false, "height");
+      this.fixedTop = await this.$getDomInfo(".report .main", false, "height");
     },
     backFromLogin(val) {
       if (val) {
@@ -231,7 +221,6 @@ export default {
       this.isOwner = this.data.openId === openId;
 
       setTimeout(() => {
-        this.getContentHeight();
         this.getFixedTop();
       }, 200);
       this.loading = false;
@@ -280,11 +269,28 @@ export default {
 
 <style scoped lang="scss">
 .report {
+  height: 100vh;
   &.has-fixed {
     @include fixed-bottom(100rpx);
   }
   &.no-fixed {
     @include fixed-bottom(0rpx);
+  }
+  .scroll-Y {
+    height: 100%;
+  }
+  .fixed-tab {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 5;
+    transform: translateY(-100%);
+    opacity: 0;
+    &.show {
+      opacity: 1;
+      transform: translateY(0%);
+    }
   }
   .main {
     padding: 56rpx 26rpx 46rpx 48rpx;
@@ -335,7 +341,7 @@ export default {
   }
   .bottom {
     padding: 14rpx 24rpx 0 24rpx;
-
+    z-index: 8;
     @include fixed-bottom(14rpx);
     box-shadow: 0px -2px 8px 0px rgba(0, 0, 0, 0.15);
     position: fixed;

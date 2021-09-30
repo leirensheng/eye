@@ -107,8 +107,8 @@ export default {
       line-height: 44rpx;
       font-weight: 400;
       color: #004dcd;
+      transition: color 0.3s;
       &.active {
-        font-weight: bold;
         color: white;
       }
     }

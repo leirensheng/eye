@@ -167,6 +167,7 @@ div {
   display: inline-block;
   left: 50%;
   transform: translate(-50%);
+  font-size: 28rpx;
   &::before {
     z-index: -1;
     position: absolute;

@@ -244,7 +244,7 @@ export default {
       border: 2rpx solid #999999;
       margin-bottom: 48rpx;
       background: white;
-      &:active {
+      &:hover {
         background: rgb(243, 243, 243);
       }
     }
@@ -252,7 +252,7 @@ export default {
       border: none;
       color: white;
       background: linear-gradient(180deg, #0060ff 0%, #004dcd 100%);
-      &:active {
+      &:hover {
         background: linear-gradient(180deg, #005bec 0%, #0145b1 100%);
       }
     }

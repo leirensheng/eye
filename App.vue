@@ -79,7 +79,7 @@ div {
   display: flex;
   justify-content: center;
   align-items: center;
-  &:active {
+  &:hover {
     background-color: #2f53d4;
   }
   &:after {

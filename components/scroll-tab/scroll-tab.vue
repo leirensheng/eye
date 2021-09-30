@@ -99,8 +99,9 @@ export default {
     border-radius: 200rpx;
     border: 2rpx solid #004dcd;
     padding: 4rpx;
+    display:flex;
+    align-items:center;
     .tab {
-      display: inline-block;
       background: transparent;
       padding: 0 42rpx;
       line-height: 44rpx;

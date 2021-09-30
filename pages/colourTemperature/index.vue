@@ -32,6 +32,7 @@ export default {
   padding: 48rpx 24rpx;
   line-height: 48rpx;
   font-size: 28rpx;
+  text-align: justify;
   .mr-top {
     margin-top: 48rpx;
   }

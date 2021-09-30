@@ -33,6 +33,7 @@
 import { getHistory } from "@/api/eye.js";
 import { mapState, mapMutations } from "vuex";
 let timer;
+let startWaitTime;
 export default {
   data() {
     return {
@@ -139,16 +140,24 @@ export default {
       "setSubscribe",
     ]),
     startWait() {
+      let waitTime = 5 * 60 * 1000
+      if (!startWaitTime) {
+        startWaitTime = Date.now();
+      }
       timer = setTimeout(async () => {
         console.log("检查一次");
         let data = await getHistory({ ...this.params, scrollId: "" });
         if (timer) {
           let isWaitContinue = this.checkAndRefresh(data);
-          if (isWaitContinue) {
+
+          let isTimeOk = Date.now() - startWaitTime < waitTime;
+          if (isWaitContinue && isTimeOk) {
             this.startWait();
+          } else {
+            this.stopWait()
           }
         }
-      }, 1000);
+      }, 3000);
     },
     checkAndRefresh(data) {
       let total = 0;
@@ -165,11 +174,12 @@ export default {
     stopWait() {
       clearTimeout(timer);
       timer = null;
+      startWaitTime = null;
     },
     async refresh(isKeepPosition) {
       let scrollTop = isKeepPosition && this.isFixedTop ? this.fixedTop + 2 : 0;
       //  有骨架屏的时候一定能撑满
-      if(scrollTop){
+      if (scrollTop) {
         uni.pageScrollTo({
           duration: 0, // 毫秒
           scrollTop, // 位置

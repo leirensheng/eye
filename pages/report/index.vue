@@ -120,6 +120,8 @@ export default {
         category: this.data.categoryQuantity || [],
         negative: this.data.negative,
         positive: this.data.positive,
+        commentKeyWord: this.data.commentKeyWord,
+        commentFinished: !!this.data.commentFinished
       };
     },
     collectSrc() {

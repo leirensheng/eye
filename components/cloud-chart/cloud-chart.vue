@@ -4,7 +4,13 @@
     <div class="types">
       <scroll-tab :tabs="tabs" v-model="curTab"></scroll-tab>
     </div>
-    <div class="no-data" v-if="showData.length === 0">
+
+    <div class="no-data generating" v-if="!commentFinished">
+      {{ commentFinished }}
+      <image class="icon" mode="widthFix" src="/static/generating.svg"></image>
+      <div class="desc">正在生成中...</div>
+    </div>
+    <div class="no-data" v-else-if="showData.length === 0">
       <image class="icon" mode="widthFix" src="/static/no-data.svg"></image>
       <div class="desc">暂无数据</div>
     </div>
@@ -33,6 +39,14 @@ export default {
       type: Array,
       default: () => [],
     },
+    commentKeyWord: {
+      type: Array,
+      default: () => [],
+    },
+    commentFinished: {
+      type: Boolean,
+      default: false,
+    },
   },
   watch: {
     curTab(val) {
@@ -42,7 +56,7 @@ export default {
   },
   computed: {
     allData() {
-      return [...this.negative, ...this.positive];
+      return [...this.negative, ...this.positive, ...this.commentKeyWord];
     },
     showData() {
       return this.isNegative
@@ -53,10 +67,16 @@ export default {
     },
     wordData() {
       return {
-        series: this.showData.map((one) => ({
-          name: one.keyword,
-          textSize: this.getSize(one.discoveryTimes),
-        })),
+        series: this.showData.map((one) => {
+          let obj = {
+            name: one.keyword,
+            textSize: this.getSize(one.discoveryTimes),
+          };
+          if (this.commentKeyWord.includes(one)) {
+            obj.color = "#999";
+          }
+          return obj;
+        }),
       };
     },
     min() {
@@ -95,6 +115,9 @@ export default {
     margin-top: 32rpx;
     display: flex;
     justify-content: center;
+  }
+  .generating {
+    margin-top: 58rpx;
   }
 }
 </style>

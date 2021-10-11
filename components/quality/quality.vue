@@ -12,7 +12,12 @@
       noDataDesc="该产品品类近三年未发现产品质量监督抽检不合格情况"
     ></unqualify>
 
-    <cloud-chart :positive="data.positive" :negative="data.negative"></cloud-chart>
+    <cloud-chart
+      :commentFinished="data.commentFinished"
+      :commentKeyWord="data.commentKeyWord"
+      :positive="data.positive"
+      :negative="data.negative"
+    ></cloud-chart>
   </div>
 </template>
 

@@ -60,7 +60,7 @@ div {
   justify-content: center;
   align-items: center;
   &[aria-disabled="true"] {
-    background: linear-gradient(180deg, #c3c3c3 0%, #999999 100%);
+    background: linear-gradient(180deg, #bdc2cb 0%, #999faa 100%);
     color: white !important;
   }
   &:after {

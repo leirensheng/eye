@@ -32,9 +32,9 @@ export default {
 
 <style scoped lang="scss">
 .my-card {
-  border: 2rpx solid #999999;
+  border: 2rpx solid #8393AC;;
   border-radius: 4rpx;
-  background: #e8e8e8;
+  background: #E8EAEE;
   padding: 36rpx 20rpx;
   text-align: center;
   width: 646rpx;

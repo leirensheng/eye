@@ -5,25 +5,31 @@
       <scroll-tab :tabs="tabs" v-model="curTab"></scroll-tab>
     </div>
 
-    <div class="no-data generating" v-if="!commentFinished">
-      {{ commentFinished }}
-      <image class="icon" mode="widthFix" src="/static/generating.svg"></image>
-      <div class="desc">正在生成中...</div>
-    </div>
-    <div class="no-data" v-else-if="showData.length === 0">
-      <image class="icon" mode="widthFix" src="/static/no-data.svg"></image>
-      <div class="desc">暂无数据</div>
-    </div>
-    <div v-else>
-      <qiun-data-charts
-        canvas2d
-        class="charts-box"
-        canvas-id="canvasPiehhjhhjhvgg"
-        :opts="opts"
-        type="word"
-        background="none"
-        :chartData="wordData"
-      />
+    <div class="content-wrap">
+      <div class="no-data generating" v-if="!commentFinished">
+        {{ commentFinished }}
+        <image
+          class="icon"
+          mode="widthFix"
+          src="/static/generating.svg"
+        ></image>
+        <div class="desc">正在生成中...</div>
+      </div>
+      <div class="no-data" v-else-if="showData.length === 0">
+        <image class="icon" mode="widthFix" src="/static/no-data.svg"></image>
+        <div class="desc">暂无数据</div>
+      </div>
+      <div class="chart" v-else>
+        <qiun-data-charts
+          canvas2d
+          class="charts-box"
+          canvas-id="canvasPiehhjhhjhvgg"
+          :opts="opts"
+          type="word"
+          background="none"
+          :chartData="wordData"
+        />
+      </div>
     </div>
   </view>
 </template>
@@ -115,6 +121,12 @@ export default {
     margin-top: 32rpx;
     display: flex;
     justify-content: center;
+  }
+  .content-wrap {
+    min-height: 214rpx;
+  }
+  .chart {
+    margin-top: 10rpx;
   }
   .generating {
     margin-top: 58rpx;

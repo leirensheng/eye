@@ -121,7 +121,7 @@ export default {
         negative: this.data.negative,
         positive: this.data.positive,
         commentKeyWord: this.data.commentKeyWord,
-        commentFinished: !!this.data.commentFinished
+        commentFinished: !!this.data.commentFinished,
       };
     },
     collectSrc() {
@@ -160,18 +160,21 @@ export default {
         uni.hideLoading();
       }
     },
-    tab() {
+    tab(val) {
       if (this.isFixedTop) {
         this.scrollTop = this.oldScrollTop;
         this.$nextTick(() => {
           this.scrollTop = this.fixedTop;
         });
       }
+      if (val === 1 && !this.data.commentFinished) {
+        this.refreshComment();
+      }
     },
   },
   onUnload() {
     uni.$off("loginStatus", this.backFromLogin);
-
+    this.tab = 0
     let isChange = this.isCollected !== this.data.collected;
     if (isChange) {
       this.setNeedRefreshCollect(true);
@@ -226,6 +229,22 @@ export default {
         this.getFixedTop();
       }, 200);
       this.loading = false;
+    },
+    async refreshComment() {
+      await this.$sleep(2000);
+      // 销毁前手动设置为0
+      if (this.tab === 1) {
+        let data = await getDetail(this.id);
+        if (!data.commentFinished) {
+          await this.refreshComment();
+        } else {
+          let { negative, positive, commentKeyWord, commentFinished } = data;
+          this.data.negative = negative;
+          this.data.positive = positive;
+          this.data.commentKeyWord = commentKeyWord;
+          this.data.commentFinished = commentFinished;
+        }
+      }
     },
     remove() {
       uni.showModal({

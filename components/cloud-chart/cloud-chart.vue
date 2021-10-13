@@ -7,7 +7,6 @@
 
     <div class="content-wrap">
       <div class="no-data generating" v-if="!commentFinished">
-        {{ commentFinished }}
         <image
           class="icon"
           mode="widthFix"

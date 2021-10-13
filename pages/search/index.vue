@@ -137,6 +137,7 @@ export default {
     ...mapMutations(["setClipData", "setNeedRefreshLeft", "setSubscribe"]),
 
     async start() {
+      this.reset()
       this.loading = true;
       this.isLogin = await this.$checkLogin();
       this.loading = false;
@@ -191,12 +192,15 @@ export default {
         url: "/pages/user/index",
       });
     },
-    clear() {
+    reset(){
       this.hasGenerate = false;
       this.value = "";
       this.isFormOk = false;
       this.form = {};
       this.result = "";
+    },
+    clear() {
+      this.reset()
       this.setClipData("");
     },
     async generateBtnClick() {

@@ -12,7 +12,7 @@
           mode="widthFix"
           src="/static/generating.svg"
         ></image>
-        <div class="desc">正在生成中...</div>
+        <div class="desc">正在生成中<dot>...</dot></div>
       </div>
       <div class="no-data" v-else-if="showData.length === 0">
         <image class="icon" mode="widthFix" src="/static/no-data.svg"></image>
@@ -129,6 +129,33 @@ export default {
   }
   .generating {
     margin-top: 58rpx;
+    .desc {
+      text-align: left;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    dot {
+      display: inline-block;
+      height: 1em;
+      line-height: 1;
+      vertical-align: -0.25em;
+      overflow: hidden;
+    }
+    dot::before {
+      display: block;
+      content: "...\A..\A.";
+      white-space: pre-wrap;
+      animation: dot 3s infinite step-start both;
+    }
+    @keyframes dot {
+      33% {
+        transform: translateY(-2em);
+      }
+      66% {
+        transform: translateY(-1em);
+      }
+    }
   }
 }
 </style>

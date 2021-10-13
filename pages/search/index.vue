@@ -110,7 +110,8 @@ export default {
         !this.isPlaformMatch ||
         this.loading ||
         (this.isShowForm && !this.isFormOk) ||
-        this.hasGenerate
+        this.hasGenerate||
+        this.notSupport
       );
     },
     isPlaformMatch() {
@@ -149,7 +150,7 @@ export default {
       });
     },
     async analyseUrl() {
-      if (!this.value) return;
+      if (!this.value||this.notSupport) return;
       this.hasGenerate = false;
       this.result = null;
       this.loading = true;

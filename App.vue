@@ -18,6 +18,10 @@ export default {
           url: "/pages/search/index",
         });
         uni.$emit("analyse");
+        // 从报告页面跳转到识别页时,真机触发了userPage的onShow,但是没触发userPage的onHide,导致isShow不能触发变化
+        setTimeout(()=>{
+          uni.$emit('userPageIsShow',false)
+        },1000)
       }
     }, 200);
   },

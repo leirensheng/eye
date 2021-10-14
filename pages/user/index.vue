@@ -65,10 +65,14 @@ export default {
     uni.$on("stopPullDown", () => {
       uni.stopPullDownRefresh();
     });
+    uni.$on('userPageIsShow',(val)=>{
+      this.isShow = val
+    })
     this.getFixedTop();
   },
   onUnLoad() {
     uni.$off("stopPullDown");
+    uni.$off("userPageIsShow");
   },
   onHide() {
     this.isShow = false;

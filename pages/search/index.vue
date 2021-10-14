@@ -214,6 +214,7 @@ export default {
       this.loading = false;
     },
     clear() {
+      if(this.loading) return
       this.reset();
       this.setClipData("");
     },

@@ -55,7 +55,6 @@ import subscribeMixin from "./subscribe";
 export default {
   mixins: [subscribeMixin],
 
-  async onShow() {},
   onUnload() {
     uni.$off("analyse");
     uni.$off("loginStatus", this.setLoginStatus);
@@ -67,7 +66,7 @@ export default {
   },
   async created() {
     if (this.$store.state.noStartWhenCreated) return;
-    
+
     let clipData = await this.$getClip();
     this.setClipData(clipData);
 
@@ -87,6 +86,16 @@ export default {
       placeholder:
         "请复制淘宝、天猫、京东、拼多多手机端室内照明产品的链接，打开小程序即可自动粘贴",
     };
+  },
+  async onShow() {
+    // tab切换保持状态
+    setTimeout(() => {
+      if (this.loading) {
+        uni.showLoading({
+          title: "解析中",
+        });
+      }
+    }, 200);
   },
   mounted() {},
   computed: {
@@ -110,7 +119,7 @@ export default {
         !this.isPlaformMatch ||
         this.loading ||
         (this.isShowForm && !this.isFormOk) ||
-        this.hasGenerate||
+        this.hasGenerate ||
         this.notSupport
       );
     },
@@ -137,7 +146,7 @@ export default {
     ...mapMutations(["setClipData", "setNeedRefreshLeft", "setSubscribe"]),
 
     async start() {
-      this.reset()
+      this.reset();
       this.loading = true;
       this.isLogin = await this.$checkLogin();
       this.loading = false;
@@ -151,16 +160,20 @@ export default {
       });
     },
     async analyseUrl() {
-      if (!this.value||this.notSupport) return;
+      if (!this.value || this.notSupport) return;
       this.hasGenerate = false;
       this.result = null;
       this.loading = true;
       uni.showLoading({
         title: "解析中",
       });
-      this.result = await analyse({ url: this.value });
-      this.form = { ...this.result };
-      uni.hideLoading();
+      try {
+        this.result = await analyse({ url: this.value });
+        this.form = { ...this.result };
+        uni.hideLoading();
+      } catch (e) {
+        console.log(e);
+      }
       this.loading = false;
     },
 
@@ -192,15 +205,16 @@ export default {
         url: "/pages/user/index",
       });
     },
-    reset(){
+    reset() {
       this.hasGenerate = false;
       this.value = "";
       this.isFormOk = false;
       this.form = {};
       this.result = "";
+      this.loading = false;
     },
     clear() {
-      this.reset()
+      this.reset();
       this.setClipData("");
     },
     async generateBtnClick() {

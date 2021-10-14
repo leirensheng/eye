@@ -139,12 +139,12 @@ div {
     rgba(255, 255, 255, 0) 52%
   );
   background-size: 200% 100%;
-  background-position-x: 140%;
-  animation: 1.5s loading ease-in-out infinite;
+  background-position-x: -50%;
+  animation: 1.5s loading linear  infinite;
 }
 @keyframes loading {
   to {
-    background-position-x: -20%;
+    background-position-x: -250%;
   }
 }
 .no-data {

@@ -1,10 +1,13 @@
 <template>
   <div class="legal">
-    <div class="hight-title">CCC证书</div>
     <div class="status" :style="{ backgroundColor, borderColor }">
       <image mode="widthFix" class="icon" :src="src"></image>
-      <div class="name">{{ statusName }}</div>
+      <div class="desc">
+        <div class="name">{{ statusName }}</div>
+        <div class="subname">{{ statusSubname }}</div>
+      </div>
     </div>
+    <div class="hight-title">CCC证书</div>
     <div class="form-wrap">
       <div class="form-name title-bg">产品参数信息</div>
       <div class="form">
@@ -140,16 +143,16 @@ export default {
     borderColor() {
       let color = "#B7EB8F";
       if (this.isNoInfo) {
-        color = "#FF8788";
+        color = "#FFB4B4";
       } else if (this.isExpired || this.hasOneDifferent) {
         color = "#FFDF77";
       }
       return color;
     },
     backgroundColor() {
-      let color = "#eeffd8";
+      let color = "#EAFFD6";
       if (this.isNoInfo) {
-        color = "#f8dfdf";
+        color = "#FFDFDF";
       } else if (this.isExpired || this.hasOneDifferent) {
         color = "#FFF9DC";
       }
@@ -167,15 +170,21 @@ export default {
     isNoInfo() {
       return !this.data.productName;
     },
-    statusName() {
+    statusSubname() {
       if (this.isNoInfo) {
-        return "未查询到该产品的CCC证书，合规性有疑问，请谨慎购买";
+        return "未查询到该产品的CCC证书，请谨慎购买";
       } else if (this.isExpired) {
-        return "请注意产品生产日期应在证书有效截止日期前，否则，合规性有疑问，请谨慎购买";
+        return "请注意产品生产日期应在证书有效截止日期前，否则请谨慎购买";
       } else if (this.hasOneDifferent) {
-        return "该产品信息与CCC证书不一致，合规性有疑问，请谨慎购买";
+        return "该产品信息与CCC证书不一致，请谨慎购买";
       }
-      return "该产品信息与CCC证书信息一致，合规性良好";
+      return "该产品信息与CCC证书信息一致";
+    },
+    statusName() {
+      if (this.isNoInfo || this.isExpired || this.hasOneDifferent) {
+        return "合规性有疑问";
+      }
+      return "合规性良好";
     },
   },
   mounted() {},
@@ -219,25 +228,41 @@ export default {
 .legal {
   .status {
     padding: 32rpx;
-    margin-top: 24rpx;
     border-radius: 4rpx;
     display: flex;
-    border: 2rpx solid;
+    border: 4rpx solid;
+    margin-bottom: 32rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 232rpx;
     // justify-content: center;
     // will-change: transform;
 
     // align-items: center;
     .icon {
       margin-top: 5rpx;
-      width: 42rpx;
-      height: 42rpx;
+      width: 200rpx;
+      height: 168rpx;
       flex-shrink: 0;
       margin-right: 16rpx;
     }
-    .name {
-      font-weight: 500;
-      font-size: 28rpx;
-      line-height: 48rpx;
+    .desc {
+      margin-left: 40rpx;
+      .subname {
+        color: rgba(0, 0, 0, 0.85);
+        margin-top: 16rpx;
+        font-weight: 400;
+        font-size: 24rpx;
+        line-height: 34rpx;
+        margin-right: 68rpx;
+      }
+      .name {
+        color: rgba(0, 0, 0, 0.85);
+        font-weight: 500;
+        font-size: 40rpx;
+        line-height: 48rpx;
+      }
     }
   }
   .form-wrap {

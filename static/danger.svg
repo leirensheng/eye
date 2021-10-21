@@ -1,1 +1,59 @@
-<svg t="1631179456363" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2209" width="32" height="32"><path d="M512 23.272727C781.870545 23.272727 1000.727273 242.129455 1000.727273 512S781.870545 1000.727273 512 1000.727273 23.272727 781.870545 23.272727 512 242.129455 23.272727 512 23.272727z m0 82.897455A405.876364 405.876364 0 0 0 106.170182 512 405.876364 405.876364 0 0 0 512 917.829818 405.876364 405.876364 0 0 0 917.829818 512 405.876364 405.876364 0 0 0 512 106.170182zM512 651.636364a52.363636 52.363636 0 1 1 0 104.727272A52.363636 52.363636 0 0 1 512 651.636364z m26.205091-384c4.794182 0 8.704 3.909818 8.704 8.750545v296.727273a8.750545 8.750545 0 0 1-8.750546 8.704h-52.31709a8.750545 8.750545 0 0 1-8.750546-8.750546V276.433455c0-4.840727 3.909818-8.750545 8.750546-8.750546z" p-id="2210" fill="#FF2022"></path></svg>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="101px" height="85px" viewBox="0 0 101 85" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>编组 14</title>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="60" height="77"></rect>
+        <filter x="-10.8%" y="-7.1%" width="121.7%" height="116.9%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.980392157   0 0 0 0 0.678431373   0 0 0 0 0.0784313725  0 0 0 1 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+        <circle id="path-3" cx="27.5" cy="27.5" r="27.5"></circle>
+        <filter x="-8.2%" y="-8.2%" width="116.4%" height="116.4%" filterUnits="objectBoundingBox" id="filter-4">
+            <feGaussianBlur stdDeviation="4" in="SourceAlpha" result="shadowBlurInner1"></feGaussianBlur>
+            <feOffset dx="0" dy="1" in="shadowBlurInner1" result="shadowOffsetInner1"></feOffset>
+            <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
+            <feColorMatrix values="0 0 0 0 1   0 0 0 0 1   0 0 0 0 1  0 0 0 0.5 0" type="matrix" in="shadowInnerInner1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="报告详情-合规性评价(无CCC)" transform="translate(-38.000000, -305.000000)">
+            <g id="编组-15" transform="translate(13.000000, 289.000000)">
+                <g id="编组-14" transform="translate(25.000000, 16.000000)">
+                    <polygon id="矩形" fill="#F73435" transform="translate(14.591397, 52.295558) scale(1, -1) rotate(-10.000000) translate(-14.591397, -52.295558) " points="14.5913975 48.2452897 19.654233 56.3458266 9.52856193 56.3458266"></polygon>
+                    <g id="编组-13" transform="translate(16.000000, 3.000000)">
+                        <g id="矩形">
+                            <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                            <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-1"></use>
+                        </g>
+                        <rect id="矩形" fill="#FF2022" opacity="0.1" x="5.64705882" y="13.5462963" width="26.8235294" height="2.13888889"></rect>
+                        <rect id="矩形" fill="#FF2022" opacity="0.1" x="5.64705882" y="21.3888889" width="22.5882353" height="2.13888889"></rect>
+                        <rect id="矩形" fill="#FF2022" opacity="0.1" x="5.64705882" y="30.6574074" width="16.2352941" height="2.13888889"></rect>
+                        <rect id="矩形" fill="#FF2022" opacity="0.1" x="5.64705882" y="38.5" width="14.8235294" height="2.13888889"></rect>
+                    </g>
+                    <g id="编组-12" transform="translate(43.000000, 19.000000)">
+                        <g id="椭圆形">
+                            <use fill="#F73435" fill-rule="evenodd" xlink:href="#path-3"></use>
+                            <use fill="black" fill-opacity="1" filter="url(#filter-4)" xlink:href="#path-3"></use>
+                        </g>
+                        <g id="编组-8" transform="translate(24.444444, 12.222222)" fill="#FFFFFF">
+                            <circle id="椭圆形" cx="3.05555556" cy="27.0634921" r="3.05555556"></circle>
+                            <path d="M-4.90493936,8.07074563 L11.0341195,7.88607973 C12.3927084,7.87033946 13.5068222,8.95893332 13.5225625,10.3175222 C13.5227069,10.3299878 13.5227566,10.3424543 13.5227115,10.3549207 C13.5176998,11.740505 12.4015509,12.8655833 11.0160505,12.8816353 L-4.9230084,13.0663012 C-6.28159725,13.0820415 -7.39571113,11.9934476 -7.4114514,10.6348588 C-7.41159582,10.6223932 -7.41164549,10.6099267 -7.4116004,10.5974603 C-7.40658871,9.21187591 -6.29043983,8.08679768 -4.90493936,8.07074563 Z" id="矩形" transform="translate(3.055556, 10.476190) rotate(90.000000) translate(-3.055556, -10.476190) "></path>
+                        </g>
+                    </g>
+                    <text id="+" font-family="PingFangSC-Regular, PingFang SC" font-size="18" font-weight="normal" fill="#F73435">
+                        <tspan x="0" y="20">+</tspan>
+                    </text>
+                    <text id="+备份-2" font-family="PingFangSC-Regular, PingFang SC" font-size="10" font-weight="normal" fill="#F73435">
+                        <tspan x="25" y="72">+</tspan>
+                    </text>
+                    <text id="+备份" font-family="PingFangSC-Regular, PingFang SC" font-size="14" font-weight="normal" fill="#F73435">
+                        <tspan x="92" y="71">+</tspan>
+                    </text>
+                    <circle id="椭圆形" fill="#F73435" cx="28.5" cy="3.5" r="3.5"></circle>
+                    <circle id="椭圆形备份" fill="#F73435" cx="90.5" cy="13.5" r="1.5"></circle>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

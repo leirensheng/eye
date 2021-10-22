@@ -336,7 +336,6 @@ export default {
       .title {
         color: black;
         font-size: 32rpx;
-        text-align: justify;
         margin-bottom: 24rpx;
         line-height: 44rpx;
         display: -webkit-box;

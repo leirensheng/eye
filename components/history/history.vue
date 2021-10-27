@@ -194,23 +194,6 @@ export default {
       await minDelayGetData();
       this.loading = false;
       this.isShowFrame = false;
-
-      // uni.pageScrollTo({
-      //         duration: 0,
-      //         scrollTop: 0,
-      //       });
-      // if (scrollTop) {
-      //   setTimeout(async () => {
-      //     let pageHeight = await this.$getDomInfo(".user-page", true, "height");
-      //     const windowHeight = uni.getSystemInfoSync().windowHeight;
-      //     if (pageHeight < windowHeight + scrollTop) {
-      //       uni.pageScrollTo({
-      //         duration: 250,
-      //         scrollTop: 0,
-      //       });
-      //     }
-      //   }, 0);
-      // }
     },
 
     minDelay(fn, minTime) {
@@ -219,13 +202,9 @@ export default {
           setTimeout(resolve, time);
         });
       return async (...args) => {
-        let start = Date.now();
-        let res = await fn.call(this, ...args);
-        let useTime = Date.now() - start;
-        if (useTime < minTime) {
-          await sleep(minTime - useTime);
-          return res;
-        }
+        let mainPromise = fn.apply(this, args)
+        let timePromise  = sleep(minTime)
+        let [res] = await Promise.all([mainPromise,timePromise])
         return res;
       };
     },
